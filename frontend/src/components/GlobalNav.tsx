@@ -23,7 +23,6 @@ export type NavView = View
 const PRIMARY = [
   { view: 'home', label: 'Graph Atlas', icon: Network, hint: 'Overview' },
   { view: 'search', label: 'Search library', icon: Search, hint: 'Search library' },
-  { view: 'downloads', label: 'Download queue', icon: Download, hint: 'Download queue' },
 ] as const
 
 export function GlobalNav({
@@ -75,9 +74,6 @@ export function GlobalNav({
             >
               <Icon size={16} aria-hidden="true" />
               <span>{t(label)}</span>
-              {target === 'downloads' && queueCount > 0 && (
-                <span className="global-nav-badge">{queueCount}</span>
-              )}
             </button>
           )
         })}
@@ -88,6 +84,24 @@ export function GlobalNav({
         <button type="button" className="global-nav-tool" onClick={onOpenBlast}>BLAST</button>
         <button type="button" className="global-nav-tool" onClick={onOpenStructure}>{t('Structure search')}</button>
         <span className="global-nav-divider" aria-hidden="true" />
+
+        {/*
+          「下载表格」单独做成实心按钮，不进左侧主导航。
+          它是全站唯一的导出入口，用户在任一页面都要够得着 —— 和另外两个
+          只是"看看"的导航项不是一个量级的动作，所以给它更高的视觉权重。
+        */}
+        <button
+          type="button"
+          className={`global-nav-downloads${view === 'downloads' ? ' is-active' : ''}`}
+          onClick={() => onNavigate('downloads')}
+          aria-current={view === 'downloads' ? 'page' : undefined}
+          title={t('Open download list')}
+        >
+          <Download size={16} aria-hidden="true" />
+          <span>{t('Downloading table')}</span>
+          {queueCount > 0 && <span className="global-nav-downloads-badge">{queueCount}</span>}
+        </button>
+
         <div className="global-nav-lang" role="group" aria-label="Language / 语言">
           <Languages size={13} aria-hidden="true" />
           {LANGS.map((option) => (

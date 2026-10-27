@@ -167,6 +167,56 @@
   background: rgba(255, 255, 255, 0.16);
 }
 
+/* --------------------------------------------------------------------------
+   下载表格：右侧实心按钮
+   --------------------------------------------------------------------------
+   它是全站唯一的导出入口，任一页面都要够得着。和左侧两个「只是看看」的导航
+   项不是一个量级的动作，所以用米黄实心从深蓝底上跳出来，队列数用深色徽章。
+   -------------------------------------------------------------------------- */
+
+.global-nav-downloads {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+  margin: 0 4px;
+  padding: 0 13px;
+  border: 1px solid rgba(237, 227, 175, 0.75);
+  border-radius: 8px;
+  background: #ede3af;
+  color: #14203a;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(237, 227, 175, 0.28);
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.global-nav-downloads:hover {
+  background: #f6efc9;
+  box-shadow: 0 4px 14px rgba(237, 227, 175, 0.42);
+}
+
+.global-nav-downloads.is-active {
+  background: #fffbe8;
+  box-shadow: inset 0 0 0 2px rgba(20, 32, 58, 0.28);
+}
+
+.global-nav-downloads-badge {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: #14203a;
+  color: #ede3af;
+  font-size: 11px;
+  font-weight: 800;
+}
+
 .global-nav-lang {
   display: inline-flex;
   align-items: center;

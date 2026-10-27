@@ -372,19 +372,6 @@ export function DownloadsPage({
 
   return (
     <div className="home-map-page downloads-atlas-page">
-      {/* Same anatomy as the home map / search table / enzyme detail bars. The
-          queue pill is this page, so it is a label rather than a button —
-          as a button it navigated to the view it was already on, which reads
-          as a download control that does nothing. */}
-      <header className="graph-top-nav downloads-topnav page-toolbar">
-        <div className="downloads-topnav-slot">
-          <span className="download-list-button is-current" aria-current="page" title={t("This is the download list")}>
-            <Download size={15} />
-            <span>{t("Downloading table")}</span>
-            {queueCount > 0 && <span className="download-list-badge">{queueCount}</span>}
-          </span>
-        </div>
-      </header>
 
       {/* No page heading: the bar above already names the page, and every pixel
           it would take comes off the bottom of the export panel — whose docked
