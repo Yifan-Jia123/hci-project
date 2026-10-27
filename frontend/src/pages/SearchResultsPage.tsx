@@ -4,7 +4,6 @@ import { ArrowUpRight, Check, Download, Loader2, Search, X } from 'lucide-react'
 import { loadMetadataFilters, searchTableEnzymes, searchTableEnzymesByIds } from '../api'
 import type { BlastHit, BlastSession, TableEnzymeRow } from '../api'
 import { SearchSetControl } from '../components/SearchSetControl'
-import { StructureSearchDrawer } from '../components/StructureSearchDrawer'
 import { sourceLabel, sourceOptions } from '../lib/sourceLabels'
 import type { Entity } from '../types'
 import { useT } from '../lib/i18n'
@@ -303,7 +302,6 @@ export function SearchResultsPage({
   /** `ecText` after its own (longer) debounce — only this drives the fetch. */
   const [ecCommitted, setEcCommitted] = useState(ecText)
   const [visibleCount, setVisibleCount] = useState(RESULT_PAGE)
-  const [structureOpen, setStructureOpen] = useState(false)
   const [selectedResultKey, setSelectedResultKey] = useState<string | null>(null)
 
   const blastMode = Boolean(blastSession)
@@ -718,14 +716,7 @@ export function SearchResultsPage({
   return (
     <div className="home-map-page search-table-page">
       <section className="search-table-stage">
-        <header className="graph-top-nav search-table-topnav">
-          <button type="button" className="atlas-brand search-table-brand" onClick={onResetHome} title={t("Back to the Atlas home map")} aria-label="Starase Atlas home">
-            <span className="atlas-logo">
-              <img className="atlas-logo-mark" src="/starase-atlas-logo.png" alt="" />
-            </span>
-            <span>Starase Atlas</span>
-          </button>
-
+        <header className="graph-top-nav search-table-topnav page-toolbar">
           <div className="search-table-search-slot">
             <button className="download-list-button" type="button" onClick={onOpenDownloads} title={t("Open download list")}>
               <Download size={15} />
@@ -756,13 +747,6 @@ export function SearchResultsPage({
               </button>
             </div>
           </div>
-
-          <nav className="graph-primary-nav" aria-label={t("Table results navigation")}>
-            <SearchSetControl value={searchSet} onChange={onSearchSetChange} />
-            <button type="button" onClick={onOpenBlast}>BLAST</button>
-            <button type="button" onClick={() => setStructureOpen(true)}>{t("Structure search")}</button>
-            <span className="graph-user-chip">NJU - China 2026</span>
-          </nav>
         </header>
 
         <div className="search-table-body">
@@ -1049,15 +1033,6 @@ export function SearchResultsPage({
         </div>
       </section>
 
-      <StructureSearchDrawer
-        open={structureOpen}
-        onClose={() => setStructureOpen(false)}
-        onTransferChebi={(chebiId) => {
-          // Put the matched compound's ChEBI in the keyword box only — the user
-          // presses Enter / the search button to actually run it.
-          setDraft(chebiId)
-        }}
-      />
     </div>
   )
 }

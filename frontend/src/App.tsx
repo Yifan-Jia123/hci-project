@@ -16,7 +16,8 @@ import { loadApiDataset } from './api'
 import type { BlastPayload, BlastSession } from './api'
 import { EnzymeDetailView } from './graphExperience'
 import { BlastDrawer } from './components/BlastDrawer'
-import { LanguageToggle } from './components/LanguageToggle'
+import { GlobalNav } from './components/GlobalNav'
+import { StructureSearchDrawer } from './components/StructureSearchDrawer'
 import { useT } from './lib/i18n'
 import { DownloadsPage } from './pages/DownloadsPage'
 import { HomePage } from './pages/HomePage'
@@ -70,6 +71,11 @@ function App() {
    */
   const [mapSearchNonce, setMapSearchNonce] = useState(0)
   const [blastOpen, setBlastOpen] = useState(false)
+  /**
+   * 结构检索抽屉提到这一层 —— 它原来是四个页面各开一份实例，
+   * 全局导航栏只有一个「结构检索」入口，所以只能有一个抽屉。
+   */
+  const [structureOpen, setStructureOpen] = useState(false)
   /** Last completed BLAST run, shown through the keyword-search table/map result views. */
   const [blastSession, setBlastSession] = useCachedState<BlastSession | null>('blastSession', null, isBlastSession)
   /** One-shot hand-off telling the home map to scope itself to the active BLAST session. */
@@ -389,6 +395,17 @@ function App() {
 
   return (
     <div className={`app-shell ${view === 'home' || view === 'search' ? 'home-shell' : ''}`}>
+      {/* 全局导航：所有页面共用这一条，页面自己的顶栏只剩「这一页做什么」。 */}
+      <GlobalNav
+        view={view}
+        onNavigate={(next) => goTo(next)}
+        searchSet={searchSet}
+        onSearchSetChange={handleSearchSetChange}
+        queueCount={queueCount}
+        onOpenBlast={openBlast}
+        onOpenStructure={() => setStructureOpen(true)}
+      />
+
       {/* The enzyme detail and downloads pages bring their own chrome (a
           home-style top nav, plus a module rail on the detail page), so the
           workspace sidebar/topbar stay out of their way. On the downloads page
@@ -581,7 +598,8 @@ function App() {
         searchSet={searchSet}
       />
 
-      <LanguageToggle />
+      {/* 结构检索抽屉：原来四个页面各开一份，现在全局一份。 */}
+      <StructureSearchDrawer open={structureOpen} onClose={() => setStructureOpen(false)} />
     </div>
   )
 }

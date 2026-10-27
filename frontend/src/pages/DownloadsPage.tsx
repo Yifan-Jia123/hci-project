@@ -21,7 +21,6 @@ import type {
   DownloadResult,
 } from '../api'
 import { fileNameFromUrl, saveFile } from '../lib/saveFile'
-import { StructureSearchDrawer } from '../components/StructureSearchDrawer'
 import { useT } from '../lib/i18n'
 
 type Tab = 'enzymes' | 'pathways'
@@ -150,7 +149,6 @@ export function DownloadsPage({
    *  fields, so switching format back and forth must not rewrite the other's. */
   const [fastaFields, setFastaFields] = useState<string[]>(FASTA_HEADER_FIELDS)
   const [searchDraft, setSearchDraft] = useState('')
-  const [structureOpen, setStructureOpen] = useState(false)
   const [busy, setBusy] = useState(false)
   const [result, setResult] = useState<{
     kind: 'done' | 'error'
@@ -378,20 +376,7 @@ export function DownloadsPage({
           queue pill is this page, so it is a label rather than a button —
           as a button it navigated to the view it was already on, which reads
           as a download control that does nothing. */}
-      <header className="graph-top-nav downloads-topnav">
-        <button
-          type="button"
-          className="atlas-brand"
-          onClick={onResetHome}
-          title={t("Back to the Atlas home map")}
-          aria-label="Starase Atlas home"
-        >
-          <span className="atlas-logo">
-            <img className="atlas-logo-mark" src="/starase-atlas-logo.png" alt="" />
-          </span>
-          <span>Starase Atlas</span>
-        </button>
-
+      <header className="graph-top-nav downloads-topnav page-toolbar">
         <div className="downloads-topnav-slot">
           <span className="download-list-button is-current" aria-current="page" title={t("This is the download list")}>
             <Download size={15} />
@@ -422,19 +407,6 @@ export function DownloadsPage({
             </button>
           </div>
         </div>
-
-        <nav className="graph-primary-nav" aria-label={t("Download page navigation")}>
-          <button type="button" onClick={() => onOpenSearch('')}>
-            {t("Data Browser")}
-          </button>
-          <button type="button" onClick={onOpenBlast}>
-            BLAST
-          </button>
-          <button type="button" onClick={() => setStructureOpen(true)}>
-            {t("Structure search")}
-          </button>
-          <span className="graph-user-chip">NJU - China 2026</span>
-        </nav>
       </header>
 
       {/* No page heading: the bar above already names the page, and every pixel
@@ -834,7 +806,6 @@ export function DownloadsPage({
         </section>
       </div>
 
-      <StructureSearchDrawer open={structureOpen} onClose={() => setStructureOpen(false)} />
     </div>
   )
 }

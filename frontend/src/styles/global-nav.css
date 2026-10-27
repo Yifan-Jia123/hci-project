@@ -1,0 +1,330 @@
+/* ==========================================================================
+   全局导航栏
+   --------------------------------------------------------------------------
+   背景：改动前四个页面各自复制了一份「品牌 + 搜索 + 导航 + 工具」的顶栏，
+   各有微妙差异（检索集在下载页消失、搜索框语义逐页变化、「检索集」在详情页
+   被挤成竖排）。这里把它拆成两层：
+
+     全局栏（本文件）  = 「去哪里」：品牌、三个主入口、检索集、BLAST、结构检索、语言
+     页面工具条        = 「这一页做什么」：搜索框、模式切换、筛选、导出设置
+
+   布局代价：原顶栏是 absolute/sticky 顶到 0，所以这里用变量把整层往下推，
+   而不是给每个页面单独打补丁。
+   ========================================================================== */
+
+:root {
+  --global-nav-h: 56px;
+}
+
+/* ---------- 栏体 ---------- */
+
+.global-nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 60;
+  height: var(--global-nav-h);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0 18px;
+  background: linear-gradient(180deg, #081a3a 0%, #0b2148 100%);
+  border-bottom: 1px solid rgba(237, 227, 175, 0.22);
+  box-shadow: 0 8px 22px rgba(4, 12, 28, 0.28);
+  color: #f4f8ff;
+}
+
+/* ---------- 品牌 ---------- */
+
+.global-nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+  min-height: 38px;
+  padding: 0 10px 0 6px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.global-nav-brand:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.global-nav-logo {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: rgba(237, 227, 175, 0.16);
+  border: 1px solid rgba(237, 227, 175, 0.32);
+  overflow: hidden;
+}
+
+.global-nav-logo img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.global-nav-wordmark {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+/* ---------- 主入口 ---------- */
+
+.global-nav-primary {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: none;
+}
+
+.global-nav-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: rgba(244, 248, 255, 0.74);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.global-nav-tab:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: #fff;
+}
+
+.global-nav-tab.is-active {
+  background: rgba(237, 227, 175, 0.18);
+  color: #fdf6dc;
+  box-shadow: inset 0 0 0 1px rgba(237, 227, 175, 0.34);
+}
+
+.global-nav-tab svg {
+  opacity: 0.85;
+}
+
+.global-nav-badge {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: #ede3af;
+  color: #14203a;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+/* ---------- 右侧工具 ---------- */
+
+.global-nav-tools {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  flex: none;
+}
+
+.global-nav-tool {
+  min-height: 32px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: rgba(244, 248, 255, 0.76);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.global-nav-tool:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.global-nav-divider {
+  width: 1px;
+  height: 20px;
+  margin: 0 6px;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.global-nav-lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  padding: 2px 3px 2px 7px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  color: rgba(244, 248, 255, 0.7);
+}
+
+.global-nav-lang-option {
+  border: 0;
+  background: transparent;
+  padding: 4px 8px;
+  border-radius: 999px;
+  color: inherit;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.global-nav-lang-option:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.global-nav-lang-option.is-active {
+  background: #ede3af;
+  color: #14203a;
+}
+
+.global-nav button:focus-visible {
+  outline: 2px solid #ede3af;
+  outline-offset: 1px;
+}
+
+/*
+ * 检索集控件是复用页面里那套 popover 组件的，它的宽度是按内容撑开的，
+ * 放进这一条窄栏里会被压成「检索 / 集」两行。这里锁死不换行。
+ */
+.global-nav .search-set-dropdown {
+  flex: none;
+  white-space: nowrap;
+}
+
+.global-nav .search-set-current {
+  white-space: nowrap;
+}
+
+/* 详情页的返回键：图标 + 文字，别被 flex 压成一列。 */
+.enzyme-back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  white-space: nowrap;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid rgba(237, 227, 175, 0.4);
+  border-radius: 8px;
+  background: rgba(237, 227, 175, 0.12);
+  color: #fdf6dc;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.enzyme-back-button:hover {
+  background: rgba(237, 227, 175, 0.22);
+}
+
+/* ---------- 让位：整层下移，原页面顶栏落到全局栏之下 ---------- */
+
+/*
+ * 只给 .app-shell 加 padding-top 就够了。
+ * 页面顶栏是 absolute 定位，参照的是 .app-shell 的 **padding box**，
+ * 所以 padding 已经把它推下来了 —— 早先这里又写了一条 top: var(--global-nav-h)，
+ * 等于推了两次，中间多出一条空白带。
+ */
+.app-shell {
+  padding-top: var(--global-nav-h);
+}
+
+/*
+ * 首页是全屏布局，内部好几层写死了 `height: 100vh` / `min-height: 100vh`
+ * （.home-map-page、.atlas-map-stage、.graph-home-stage…）。加了全局栏之后，
+ * 这些写死的视口高会比可视区多出 56px，把底部统计条顶出视口。
+ *
+ * 这里把它们统一按全局栏高度扣减。整条链路的每一层都给同一个值，
+ * 就不会出现「外层 944、内层 1000」的错位。
+ */
+.app-shell.home-shell {
+  /* 它自己带 padding-top，box-sizing 是 border-box，所以 100vh 里已经扣过全局栏了。 */
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* 往里每一层都没有 padding，必须自己减掉全局栏高度。 */
+.app-shell.home-shell .main-area,
+.app-shell.home-shell .graph-home-page,
+.app-shell.home-shell .graph-home-stage,
+.app-shell.home-shell .home-map-page,
+.app-shell.home-shell .atlas-map-stage {
+  height: calc(100vh - var(--global-nav-h));
+  min-height: 0;
+}
+
+/* ---------- 页面工具条：顶栏只剩「这一页做什么」 ---------- */
+
+/* 品牌和主导航移走后，原三列栅格塌成一列：工具条内容居中，别被拉满全宽。 */
+.app-shell .graph-top-nav.page-toolbar {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: 10px;
+}
+
+.app-shell .graph-top-nav.page-toolbar > * {
+  width: min(980px, 100%);
+  max-width: 100%;
+}
+
+.app-shell .graph-top-nav.page-toolbar .home-search-bar {
+  width: min(720px, 100%);
+}
+
+/* ---------- 窄屏 ---------- */
+
+@media (max-width: 1180px) {
+  .global-nav {
+    gap: 10px;
+    padding: 0 12px;
+  }
+
+  .global-nav-wordmark {
+    display: none;
+  }
+
+  .global-nav-tab span {
+    display: none;
+  }
+
+  .global-nav-tab {
+    padding: 0 9px;
+  }
+}
+
+@media (max-width: 760px) {
+  :root {
+    --global-nav-h: 52px;
+  }
+
+  .global-nav-tool {
+    padding: 0 7px;
+    font-size: 12px;
+  }
+
+  .global-nav-divider {
+    display: none;
+  }
+}

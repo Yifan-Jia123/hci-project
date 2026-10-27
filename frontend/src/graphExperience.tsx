@@ -45,8 +45,7 @@ import {
   type HomeGraphEdgeGroupItem,
   type HomePathwayCard,
 } from './api'
-import { SearchSetControl } from './components/SearchSetControl'
-import { StructureSearchDrawer } from './components/StructureSearchDrawer'
+
 import { fileNameFromUrl, saveFile } from './lib/saveFile'
 import { sourceLabel, sourceOptionsFromUnits } from './lib/sourceLabels'
 import type { Entity, EntityKind, PathwayEnzymeChoice, PathwayQueueStep } from './types'
@@ -666,7 +665,6 @@ export function CompoundGraphHome({
   const [nodeSize, setNodeSize] = useState(1.8)
   const [edgeThickness, setEdgeThickness] = useState(1)
   const [labelFontScale, setLabelFontScale] = useState(1)
-  const [structureOpen, setStructureOpen] = useState(false)
   // 两档 chip 默认都亮、阈值默认 0 —— 打开就是全显示，与加筛选器之前的默认视图一致。
   const [activeFilters, setActiveFilters] = useState<HomeActiveFilters>({
     species: [], sourceTypes: [], minScore: 0, showMembrane: true, showNonMembrane: true,
@@ -2279,14 +2277,7 @@ export function CompoundGraphHome({
   return (
     <div className={`home-map-page${hidden ? ' map-hidden' : ''}`} style={homeMapStyle}>
       <section className="atlas-map-stage atlas-live-stage" aria-label={t("Interactive compound graph homepage")}>
-        <header className="graph-top-nav">
-          <button type="button" className="atlas-brand" onClick={handleBrandHome} title={t("Back to the Atlas home map")} aria-label="Starase Atlas home">
-            <span className="atlas-logo">
-              <img className="atlas-logo-mark" src="/starase-atlas-logo.png" alt="" />
-            </span>
-            <span>Starase Atlas</span>
-          </button>
-
+        <header className="graph-top-nav page-toolbar">
           <div className={`home-search-bar ${searchMode === 'pathway' ? 'pathway-mode' : ''}`}>
             <div className="home-mode-toggle" role="group" aria-label={t("Map search mode")}>
               <button type="button" className={searchMode === 'enzyme' ? 'is-active' : ''} onClick={() => switchSearchMode('enzyme')} title={t("Search compounds and enzymes by keyword / BLAST")}>
@@ -2353,14 +2344,6 @@ export function CompoundGraphHome({
               </>
             )}
           </div>
-
-          <nav className="graph-primary-nav" aria-label={t("Graph page navigation")}>
-            <SearchSetControl value={searchSet} onChange={onSearchSetChange} />
-            <button type="button" onClick={() => onOpenSearch(searchValue.trim() || undefined)}>{t("Data Browser")}</button>
-            <button type="button" onClick={onOpenBlast}>BLAST</button>
-            <button type="button" onClick={() => setStructureOpen(true)}>{t("Structure search")}</button>
-            <span className="graph-user-chip">NJU - China 2026</span>
-          </nav>
         </header>
 
         <div className="graph-title-band">
@@ -3264,16 +3247,6 @@ export function CompoundGraphHome({
           )}
         </div>
 
-        <StructureSearchDrawer
-          open={structureOpen}
-          onClose={() => setStructureOpen(false)}
-          onTransferChebi={(chebiId) => {
-            // Drop the matched compound's ChEBI into the map search box only —
-            // the user decides when to run it.
-            setSearchValue(chebiId)
-            setSearchFocused(false)
-          }}
-        />
 
         {pickerOpen && pathwayDetail && detailSteps.length > 0 && (
           <PathwayEnzymePickerDrawer
@@ -3661,7 +3634,6 @@ export function EnzymeDetailView({ enzymeId, onBack, onToggleQueue, isQueued, qu
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [downloadState, setDownloadState] = useState<'idle' | 'loading' | 'ready' | 'error'>('idle')
-  const [structureOpen, setStructureOpen] = useState(false)
   const [searchDraft, setSearchDraft] = useState('')
   const [activeModule, setActiveModule] = useState<string>(ENZYME_MODULES[0].id)
   /** The element that actually scrolls — the page itself is locked by
@@ -3763,18 +3735,14 @@ export function EnzymeDetailView({ enzymeId, onBack, onToggleQueue, isQueued, qu
     <div className="home-map-page enzyme-atlas-page">
       <section className="enzyme-atlas-stage">
         {/* Same anatomy as the home map / search table top bar. */}
-        <header className="graph-top-nav enzyme-topnav">
-          {/* `onBack` is a real history pop, so it returns wherever the user came
-              from — which may be the search table, not the home map. */}
-          <button type="button" className="atlas-brand" onClick={onBack} title={t("Back")} aria-label={t("Back")}>
-            <span className="atlas-logo">
-              <img className="atlas-logo-mark" src="/starase-atlas-logo.png" alt="" />
-            </span>
-            <span>Starase Atlas</span>
-          </button>
-
+        <header className="graph-top-nav enzyme-topnav page-toolbar">
+          {/* 品牌按钮原来是「返回」（onBack 是一次真正的历史回退），
+              品牌移到全局栏之后，这里换成一个显式的返回键，别把功能一起删掉。 */}
           <div className="enzyme-topnav-slot">
-            <SearchSetControl value={searchSet} onChange={onSearchSetChange} />
+            <button className="enzyme-back-button" type="button" onClick={onBack} title={t('Back to results')}>
+              <ArrowLeft size={15} />
+              <span>{t('Back')}</span>
+            </button>
 
             <button className="download-list-button" type="button" onClick={onOpenDownloads} title={t("Open download list")}>
               <Download size={15} />
@@ -3803,13 +3771,6 @@ export function EnzymeDetailView({ enzymeId, onBack, onToggleQueue, isQueued, qu
               </button>
             </div>
           </div>
-
-          <nav className="graph-primary-nav" aria-label={t("Enzyme detail navigation")}>
-            <button type="button" onClick={() => onOpenSearch('')}>{t("Data Browser")}</button>
-            <button type="button" onClick={onOpenBlast}>BLAST</button>
-            <button type="button" onClick={() => setStructureOpen(true)}>{t("Structure search")}</button>
-            <span className="graph-user-chip">NJU - China 2026</span>
-          </nav>
         </header>
 
         <div className="enzyme-atlas-body">
@@ -4093,14 +4054,6 @@ export function EnzymeDetailView({ enzymeId, onBack, onToggleQueue, isQueued, qu
         </div>
       </section>
 
-      <StructureSearchDrawer
-        open={structureOpen}
-        onClose={() => setStructureOpen(false)}
-        onTransferChebi={(chebiId) => {
-          setStructureOpen(false)
-          onOpenMapScoped(chebiId)
-        }}
-      />
     </div>
   )
 }
