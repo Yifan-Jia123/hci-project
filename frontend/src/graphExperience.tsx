@@ -2346,15 +2346,6 @@ export function CompoundGraphHome({
           </div>
         </header>
 
-        <div className="graph-title-band">
-          <div className="graph-crumbs">
-            <span>{t("Home")}</span>
-            <ChevronRight size={14} />
-            <strong>{t("Graph Atlas")}</strong>
-          </div>
-          <h1>{t("Compound Relationship Graph: Enzymes & Pathways")}</h1>
-        </div>
-
         <aside
           className={`graph-filter-sidebar ${filtersOpen ? '' : 'is-collapsed'}`}
           aria-label={t("Graph filters and controls")}
@@ -3207,45 +3198,45 @@ export function CompoundGraphHome({
           </div>
         )}
 
-        <div className="map-footer-stats home-map-stats">
-          {detailOpen && pathwayDetail ? (
-            <>
-              <span className="home-stats-scope">Pathway detail · “{pathwaySession?.query}”</span>
-              <span>Compounds in chain: {pathwayDetail.chain.length}</span>
-              <span>Steps: {pathwayDetail.card.stepCount}</span>
-            </>
-          ) : pathwaySession ? (
-            <>
-              <span className="home-stats-scope">Pathways · “{pathwaySession.query}”</span>
-              <span>Compounds in union: {pathwaySession.graph.nodes.length}</span>
-              <span>Pathways returned: {pathwaySession.cards.length} / {pathwaySession.total}</span>
-            </>
-          ) : scopeSearch ? (
-            <>
-              <span className="home-stats-scope">
-                Scope · “{scopeSearch.query}”
-                {scopeSearch.kind === 'compound'
-                  ? ` · compound${scopeSearch.reactionCount ? ` · ${scopeSearch.reactionCount} reactions` : ''}`
-                  : ` · ${scopeSearch.total} hit(s) · top ${scopeSearch.shown}`}
-              </span>
-              <span>Compounds in scope: {graph?.nodes.length ?? 0}</span>
-              <span>Enzyme edges in scope: {graph?.edges.length ?? 0}</span>
-            </>
-          ) : blastScope ? (
-            <>
-              <span className="home-stats-scope">Scope · BLASTp · {blastScope.hits} hit{blastScope.hits === 1 ? '' : 's'} · query {blastScope.queryLength} aa</span>
-              <span>Compounds in scope: {graph?.nodes.length ?? 0}</span>
-              <span>Enzyme edges in scope: {graph?.edges.length ?? 0}</span>
-            </>
-          ) : (
-            <>
-              <span>{t('Total compounds')}: {graph?.nodes.length ?? 0}</span>
-              <span>{t('Total enzyme edges')}: {graph?.edges.length ?? 0}</span>
-              <span>{t('Visible compound pairs')}: {viewModel.pairs.length}</span>
-              <span>{t('Visible map edges')}: {visibleEdgeCount}</span>
-            </>
-          )}
-        </div>
+        {/*
+          底部统计条：默认浏览态不再显示（原先那四个「化合物总数 / 酶边总数 /
+          可见化合物对 / 可见图谱边」）。只有真的在某个范围里看东西时才有意义 ——
+          通路结果、检索范围、BLAST 命中 —— 那几种状态才渲染。
+        */}
+        {(detailOpen && pathwayDetail) || pathwaySession || scopeSearch || blastScope ? (
+          <div className="map-footer-stats home-map-stats">
+            {detailOpen && pathwayDetail ? (
+              <>
+                <span className="home-stats-scope">Pathway detail · “{pathwaySession?.query}”</span>
+                <span>Compounds in chain: {pathwayDetail.chain.length}</span>
+                <span>Steps: {pathwayDetail.card.stepCount}</span>
+              </>
+            ) : pathwaySession ? (
+              <>
+                <span className="home-stats-scope">Pathways · “{pathwaySession.query}”</span>
+                <span>Compounds in union: {pathwaySession.graph.nodes.length}</span>
+                <span>Pathways returned: {pathwaySession.cards.length} / {pathwaySession.total}</span>
+              </>
+            ) : scopeSearch ? (
+              <>
+                <span className="home-stats-scope">
+                  Scope · “{scopeSearch.query}”
+                  {scopeSearch.kind === 'compound'
+                    ? ` · compound${scopeSearch.reactionCount ? ` · ${scopeSearch.reactionCount} reactions` : ''}`
+                    : ` · ${scopeSearch.total} hit(s) · top ${scopeSearch.shown}`}
+                </span>
+                <span>Compounds in scope: {graph?.nodes.length ?? 0}</span>
+                <span>Enzyme edges in scope: {graph?.edges.length ?? 0}</span>
+              </>
+            ) : (
+              <>
+                <span className="home-stats-scope">Scope · BLASTp · {blastScope?.hits} hit{blastScope?.hits === 1 ? '' : 's'} · query {blastScope?.queryLength} aa</span>
+                <span>Compounds in scope: {graph?.nodes.length ?? 0}</span>
+                <span>Enzyme edges in scope: {graph?.edges.length ?? 0}</span>
+              </>
+            )}
+          </div>
+        ) : null}
 
 
         {pickerOpen && pathwayDetail && detailSteps.length > 0 && (

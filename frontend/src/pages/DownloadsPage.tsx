@@ -383,29 +383,6 @@ export function DownloadsPage({
             <span>{t("Downloading table")}</span>
             {queueCount > 0 && <span className="download-list-badge">{queueCount}</span>}
           </span>
-
-          <div className="home-search-bar downloads-search-bar">
-            <div className="home-mode-toggle" role="group" aria-label={t("Search mode")}>
-              <button type="button" className="is-active" aria-current="page" title={t("Search compounds and enzymes by keyword / BLAST")}>{t("Enzyme")}</button>
-              <button type="button" onClick={onOpenPathwaySearch} title={t("Find compound chains from a start through optional waypoints to an end")}>{t("Pathway")}</button>
-            </div>
-            <input
-              value={searchDraft}
-              onChange={(event) => setSearchDraft(event.target.value)}
-              onKeyDown={(event) => {
-                if (event.key === 'Enter') onOpenSearch(searchDraft)
-              }}
-              placeholder="Search enzymes by name, UniProt, EC or gene…"
-              aria-label={t("Search the enzyme library")}
-            />
-            <div className="home-result-toggle" role="group" aria-label={t("Search result view")}>
-              <button type="button" onClick={() => onOpenMap(searchDraft)} title={t("Show these results on the map")}>{t("Map")}</button>
-              <button type="button" className="is-active" aria-current="page">{t("Table")}</button>
-            </div>
-            <button className="home-search-submit" type="button" onClick={() => onOpenSearch(searchDraft)} title={t("Search")}>
-              <Search size={18} />
-            </button>
-          </div>
         </div>
       </header>
 
