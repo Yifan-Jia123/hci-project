@@ -51,6 +51,7 @@ import { fileNameFromUrl, saveFile } from './lib/saveFile'
 import { sourceLabel, sourceOptionsFromUnits } from './lib/sourceLabels'
 import type { Entity, EntityKind, PathwayEnzymeChoice, PathwayQueueStep } from './types'
 import type { MapSearchRoute } from './lib/routes'
+import { useT } from './lib/i18n'
 
 const HOME_EXPANSION_LIMIT = 36
 const HOME_VIEWBOX_WIDTH = 100
@@ -231,12 +232,13 @@ const MEMBRANE_VALUE = 'membrane'
  *  否则用户会以为过滤器坏了。`'non-membrane'` / `'unannotated'` 不出标记：
  *  前者只有 1,262 条、标记没信息量，后者占八成、标上去只是噪声。 */
 function EnzymeScoreChip({ score, membrane }: { score?: number | null; membrane?: string | null }) {
+  const t = useT()
   if (score == null) return null
   const isMembrane = membrane === MEMBRANE_VALUE
   return (
     <span
       className="enzyme-card-score-chip"
-      title="DeepSolNet model reference score — not a solubility label"
+      title={t("DeepSolNet model reference score — not a solubility label")}
     >
       DeepSolNet Score {score.toFixed(3)}{isMembrane ? ' · membrane' : ''}
     </span>
@@ -557,6 +559,7 @@ export function CompoundGraphHome({
   searchSet: string[]
   onSearchSetChange: (next: string[]) => void
 }) {
+  const t = useT()
   const [graph, setGraph] = useState<HomeGraphData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -2251,7 +2254,7 @@ export function CompoundGraphHome({
     if (chebiId?.startsWith('CHEBI:')) return `/api/v1/assets/compounds/${encodeURIComponent(chebiId)}/structure.svg?v=4`
     return compound.structureImageUrl || null
   }
-  const searchPlaceholder = 'Search compounds or enzymes (e.g. limonene, germacrene D synthase)'
+  const searchPlaceholder = t('Search compounds or enzymes (e.g. limonene, germacrene D synthase)')
 
   const selectedNeighborIds = new Set<string>()
   if (selectedNodeId) {
@@ -2275,9 +2278,9 @@ export function CompoundGraphHome({
 
   return (
     <div className={`home-map-page${hidden ? ' map-hidden' : ''}`} style={homeMapStyle}>
-      <section className="atlas-map-stage atlas-live-stage" aria-label="Interactive compound graph homepage">
+      <section className="atlas-map-stage atlas-live-stage" aria-label={t("Interactive compound graph homepage")}>
         <header className="graph-top-nav">
-          <button type="button" className="atlas-brand" onClick={handleBrandHome} title="Back to the Atlas home map" aria-label="Starase Atlas home">
+          <button type="button" className="atlas-brand" onClick={handleBrandHome} title={t("Back to the Atlas home map")} aria-label="Starase Atlas home">
             <span className="atlas-logo">
               <img className="atlas-logo-mark" src="/starase-atlas-logo.png" alt="" />
             </span>
@@ -2285,12 +2288,12 @@ export function CompoundGraphHome({
           </button>
 
           <div className={`home-search-bar ${searchMode === 'pathway' ? 'pathway-mode' : ''}`}>
-            <div className="home-mode-toggle" role="group" aria-label="Map search mode">
-              <button type="button" className={searchMode === 'enzyme' ? 'is-active' : ''} onClick={() => switchSearchMode('enzyme')} title="Search compounds and enzymes by keyword / BLAST">
-                Enzyme
+            <div className="home-mode-toggle" role="group" aria-label={t("Map search mode")}>
+              <button type="button" className={searchMode === 'enzyme' ? 'is-active' : ''} onClick={() => switchSearchMode('enzyme')} title={t("Search compounds and enzymes by keyword / BLAST")}>
+                {t("Enzyme")}
               </button>
-              <button type="button" className={searchMode === 'pathway' ? 'is-active' : ''} onClick={() => switchSearchMode('pathway')} title="Find compound chains from a start through optional waypoints to an end">
-                Pathway
+              <button type="button" className={searchMode === 'pathway' ? 'is-active' : ''} onClick={() => switchSearchMode('pathway')} title={t("Find compound chains from a start through optional waypoints to an end")}>
+                {t("Pathway")}
               </button>
             </div>
             {searchMode === 'enzyme' && (
@@ -2308,11 +2311,11 @@ export function CompoundGraphHome({
                   }}
                   placeholder={searchPlaceholder}
                 />
-                <div className="home-result-toggle" role="group" aria-label="Search result view">
-                  <button type="button" className={resultMode === 'map' ? 'is-active' : ''} onClick={() => setResultMode('map')}>Map</button>
-                  <button type="button" className={resultMode === 'table' ? 'is-active' : ''} onClick={() => setResultMode('table')}>Table</button>
+                <div className="home-result-toggle" role="group" aria-label={t("Search result view")}>
+                  <button type="button" className={resultMode === 'map' ? 'is-active' : ''} onClick={() => setResultMode('map')}>{t("Map")}</button>
+                  <button type="button" className={resultMode === 'table' ? 'is-active' : ''} onClick={() => setResultMode('table')}>{t("Table")}</button>
                 </div>
-                <button className="home-search-submit" type="button" onClick={() => void handleSearchSubmit()} title="Search">
+                <button className="home-search-submit" type="button" onClick={() => void handleSearchSubmit()} title={t("Search")}>
                   <Search size={20} />
                 </button>
                 {showSearchSuggestions && (
@@ -2351,49 +2354,49 @@ export function CompoundGraphHome({
             )}
           </div>
 
-          <nav className="graph-primary-nav" aria-label="Graph page navigation">
+          <nav className="graph-primary-nav" aria-label={t("Graph page navigation")}>
             <SearchSetControl value={searchSet} onChange={onSearchSetChange} />
-            <button type="button" onClick={() => onOpenSearch(searchValue.trim() || undefined)}>Data Browser</button>
+            <button type="button" onClick={() => onOpenSearch(searchValue.trim() || undefined)}>{t("Data Browser")}</button>
             <button type="button" onClick={onOpenBlast}>BLAST</button>
-            <button type="button" onClick={() => setStructureOpen(true)}>Structure search</button>
+            <button type="button" onClick={() => setStructureOpen(true)}>{t("Structure search")}</button>
             <span className="graph-user-chip">NJU - China 2026</span>
           </nav>
         </header>
 
         <div className="graph-title-band">
           <div className="graph-crumbs">
-            <span>Home</span>
+            <span>{t("Home")}</span>
             <ChevronRight size={14} />
-            <strong>Graph Atlas</strong>
+            <strong>{t("Graph Atlas")}</strong>
           </div>
-          <h1>Compound Relationship Graph: Enzymes & Pathways</h1>
+          <h1>{t("Compound Relationship Graph: Enzymes & Pathways")}</h1>
         </div>
 
         <aside
           className={`graph-filter-sidebar ${filtersOpen ? '' : 'is-collapsed'}`}
-          aria-label="Graph filters and controls"
+          aria-label={t("Graph filters and controls")}
           aria-hidden={!filtersOpen}
         >
           <div className="home-filter-head">
-            <p className="graph-filter-title">Filters</p>
+            <p className="graph-filter-title">{t("Filters")}</p>
             {anyFilterActive && (
               <button className="home-filter-reset" type="button" onClick={resetActiveFilters}>
-                Reset
+                {t("Reset")}
               </button>
             )}
           </div>
 
           <div className="home-filter-group">
             <button className={`home-filter-select ${speciesMenuOpen ? 'is-open' : ''}`} type="button" onClick={() => setSpeciesMenuOpen((open) => !open)} aria-expanded={speciesMenuOpen}>
-              <span className="home-filter-select-label">Organism</span>
-              <span className="home-filter-select-value">{activeFilters.species.length === 0 ? 'All organisms' : `${activeFilters.species.length} selected`}</span>
+              <span className="home-filter-select-label">{t("Organism")}</span>
+              <span className="home-filter-select-value">{activeFilters.species.length === 0 ? t('All organisms') : `${activeFilters.species.length} ${t('selected')}`}</span>
               <ChevronDown size={14} />
             </button>
             {speciesMenuOpen && (
               <div className="home-filter-menu">
                 <div className="home-filter-search">
                   <Search size={13} />
-                  <input value={speciesQuery} onChange={(event) => setSpeciesQuery(event.target.value)} placeholder="Search organisms…" autoFocus />
+                  <input value={speciesQuery} onChange={(event) => setSpeciesQuery(event.target.value)} placeholder={t("Search organisms…")} autoFocus />
                 </div>
                 <div className="home-filter-list">
                   {speciesSelectOptions.filter((species) => species.toLowerCase().includes(speciesQuery.trim().toLowerCase())).map((species) => {
@@ -2405,7 +2408,7 @@ export function CompoundGraphHome({
                       </button>
                     )
                   })}
-                  {speciesSelectOptions.length === 0 && <div className="home-filter-empty">No organism data yet.</div>}
+                  {speciesSelectOptions.length === 0 && <div className="home-filter-empty">{t("No organism data yet.")}</div>}
                 </div>
               </div>
             )}
@@ -2424,7 +2427,7 @@ export function CompoundGraphHome({
               搜索集生效但图上一个来源都没有时会走到这里。 */}
           {sourceFilterOptions.length > 0 && (
           <div className="home-filter-group">
-            <p className="home-filter-label">Data source</p>
+            <p className="home-filter-label">{t("Data source")}</p>
             <div className="home-chip-row home-source-chips">
               {sourceFilterOptions.map((key) => {
                 const checked = activeFilters.sourceTypes.includes(key)
@@ -2449,20 +2452,20 @@ export function CompoundGraphHome({
               滑块自己的标签仍是 DeepSolNet Score, 没跟着改。 */}
           <div className="home-filter-group">
             <div className="home-filter-label-row" ref={scoreHelpRef}>
-              <p className="home-filter-label">Solubility score</p>
+              <p className="home-filter-label">{t("Solubility score")}</p>
               <button
                 type="button"
                 className={`home-filter-help ${scoreHelpOpen ? 'is-open' : ''}`}
                 onClick={() => setScoreHelpOpen((open) => !open)}
                 aria-expanded={scoreHelpOpen}
-                aria-label="What is the solubility score?"
-                title="What is the solubility score?"
+                aria-label={t("What is the solubility score?")}
+                title={t("What is the solubility score?")}
               >
                 <CircleHelp size={13} />
               </button>
               {scoreHelpOpen && (
                 <div className="home-filter-help-card" role="note">
-                  <p className="home-filter-help-title">Solubility score</p>
+                  <p className="home-filter-help-title">{t("Solubility score")}</p>
                   <p className="home-filter-help-body">
                     Computed by the open-source tool DeepSolNet with its original weights.
                     It is a model reference score, not a strict probability that an enzyme
@@ -2479,7 +2482,7 @@ export function CompoundGraphHome({
                 title={activeFilters.showMembrane ? 'Hide membrane proteins' : 'Show membrane proteins'}
               >
                 {activeFilters.showMembrane ? <Check size={11} /> : null}
-                Membrane
+                {t("Membrane")}
               </button>
 
               {/* 「Non-membrane」和它的下级滑块包在一起 —— 层级在 DOM 里就是真的，
@@ -2492,7 +2495,7 @@ export function CompoundGraphHome({
                   title={activeFilters.showNonMembrane ? 'Hide non-membrane proteins' : 'Show non-membrane proteins'}
                 >
                   {activeFilters.showNonMembrane ? <Check size={11} /> : null}
-                  Non-membrane
+                  {t("Non-membrane")}
                 </button>
 
                 <div className={`home-filter-subgroup ${activeFilters.showNonMembrane ? '' : 'is-disabled'}`}>
@@ -2500,7 +2503,7 @@ export function CompoundGraphHome({
                     className="home-filter-label"
                     title="DeepSolNet model reference score — not a solubility or expression label"
                   >
-                    DeepSolNet Score
+                    {t("DeepSolNet Score")}
                   </p>
                   <div className="control-slider-row">
                     <input
@@ -2513,7 +2516,7 @@ export function CompoundGraphHome({
                       value={activeFilters.minScore}
                       disabled={!activeFilters.showNonMembrane}
                       onChange={(event) => setMinScore(Number(event.target.value))}
-                      aria-label="Minimum DeepSolNet score for non-membrane proteins"
+                      aria-label={t("Minimum DeepSolNet score for non-membrane proteins")}
                     />
                     <span className="control-value">{activeFilters.minScore.toFixed(2)}</span>
                   </div>
@@ -2529,54 +2532,54 @@ export function CompoundGraphHome({
 
           <div className={`floating-pill mapping-pill ${controlsOpen ? 'is-open' : ''}`}>
             <button type="button" onClick={() => setControlsOpen((open) => !open)}>
-              <span>Graph controls</span>
+              <span>{t("Graph controls")}</span>
               <ChevronDown size={16} />
             </button>
             {controlsOpen && (
               <div className="floating-menu source-menu compact-home-menu control-home-menu">
                 <div className="control-group">
-                  <label htmlFor="home-node-size">Node size</label>
+                  <label htmlFor="home-node-size">{t("Node size")}</label>
                   <div className="control-slider-row">
                     <input id="home-node-size" className="control-slider" type="range" min="0.7" max="2.8" step="0.05" value={nodeSize} onChange={(event) => setNodeSize(Number(event.target.value))} />
                     <span className="control-value">{nodeSize.toFixed(1)}</span>
                   </div>
                 </div>
                 <div className="control-group">
-                  <label htmlFor="home-edge-thickness">Edge thickness</label>
+                  <label htmlFor="home-edge-thickness">{t("Edge thickness")}</label>
                   <div className="control-slider-row">
                     <input id="home-edge-thickness" className="control-slider" type="range" min="0.5" max="2.4" step="0.05" value={edgeThickness} onChange={(event) => setEdgeThickness(Number(event.target.value))} />
                     <span className="control-value">{edgeThickness.toFixed(2)}</span>
                   </div>
                 </div>
                 <div className="control-group">
-                  <label htmlFor="home-label-font">Label font size</label>
+                  <label htmlFor="home-label-font">{t("Label font size")}</label>
                   <div className="control-slider-row">
                     <input id="home-label-font" className="control-slider" type="range" min="0.6" max="2.6" step="0.05" value={labelFontScale} onChange={(event) => setLabelFontScale(Number(event.target.value))} />
                     <span className="control-value">{labelFontScale.toFixed(2)}×</span>
                   </div>
                 </div>
                 <div className="control-menu-actions">
-                  <button type="button" onClick={() => { resetLayout(); setControlsOpen(false) }}>Reset layout</button>
+                  <button type="button" onClick={() => { resetLayout(); setControlsOpen(false) }}>{t("Reset layout")}</button>
                 </div>
               </div>
             )}
           </div>
 
           <button className="graph-filter-link" type="button" onClick={clearPairSelection}>
-            Clear selection
+            {t("Clear selection")}
           </button>
           <button className="graph-filter-link" type="button" onClick={() => onOpenSearch(searchValue.trim() || undefined)}>
-            Open search library
+            {t("Open search library")}
           </button>
-          <div className="graph-zoom-controls" aria-label="Map zoom controls">
-            <button type="button" onClick={() => adjustZoom(zoomScale - 0.1)} aria-label="Zoom out">−</button>
+          <div className="graph-zoom-controls" aria-label={t("Map zoom controls")}>
+            <button type="button" onClick={() => adjustZoom(zoomScale - 0.1)} aria-label={t("Zoom out")}>−</button>
             <span>{Math.round(zoomScale * 100)}%</span>
-            <button type="button" onClick={() => adjustZoom(zoomScale + 0.1)} aria-label="Zoom in">+</button>
-            <button type="button" onClick={() => adjustZoom(1)} aria-label="Reset zoom">Reset</button>
+            <button type="button" onClick={() => adjustZoom(zoomScale + 0.1)} aria-label={t("Zoom in")}>+</button>
+            <button type="button" onClick={() => adjustZoom(1)} aria-label={t("Reset zoom")}>{t("Reset")}</button>
           </div>
 
           <button className="floating-pill download-pill home-pill-button" type="button" onClick={onOpenDownloads}>
-            Downloading table
+            {t('Downloading table')}
             {queueCount > 0 && <span>{queueCount}</span>}
           </button>
         </aside>
@@ -2588,8 +2591,8 @@ export function CompoundGraphHome({
           className={`home-sidebar-collapse ${filtersOpen ? '' : 'is-hidden'}`}
           type="button"
           onClick={() => setFiltersOpen(false)}
-          aria-label="Collapse filters"
-          title="Collapse filters"
+          aria-label={t("Collapse filters")}
+          title={t("Collapse filters")}
         >
           <ChevronLeft size={14} />
         </button>
@@ -2598,8 +2601,8 @@ export function CompoundGraphHome({
           className={`home-sidebar-reopen ${filtersOpen ? 'is-hidden' : ''}`}
           type="button"
           onClick={() => setFiltersOpen(true)}
-          aria-label="Show filters"
-          title="Show filters"
+          aria-label={t("Show filters")}
+          title={t("Show filters")}
         >
           <ChevronRight size={14} />
           {anyFilterActive && <span className="home-sidebar-reopen-dot" aria-hidden="true" />}
@@ -2633,9 +2636,9 @@ export function CompoundGraphHome({
               </span>
             )}
             {scopeSearch.kind === 'enzyme' && (
-              <button className="home-scope-action" type="button" onClick={() => onOpenSearch(scopeSearch.query)}>Open table</button>
+              <button className="home-scope-action" type="button" onClick={() => onOpenSearch(scopeSearch.query)}>{t("Open table")}</button>
             )}
-            <button className="home-scope-action ghost" type="button" onClick={clearSearchEverywhere}>Clear search</button>
+            <button className="home-scope-action ghost" type="button" onClick={clearSearchEverywhere}>{t("Clear search")}</button>
           </div>
         )}
         {searchMode === 'enzyme' && blastScope && !blastLoading && (
@@ -2644,8 +2647,8 @@ export function CompoundGraphHome({
             <span className="scope-count">
               {blastScope.hits} hit{blastScope.hits === 1 ? '' : 's'} · query {blastScope.queryLength} aa · threshold E-value ≤ {blastScope.threshold === 10 ? '10' : blastScope.threshold.toExponential(0)} · {blastScope.searchedSubjects} subjects
             </span>
-            <button className="home-scope-action" type="button" onClick={onOpenBlastTable}>Table results</button>
-            <button className="home-scope-action ghost" type="button" onClick={clearSearchEverywhere}>Clear search</button>
+            <button className="home-scope-action" type="button" onClick={onOpenBlastTable}>{t("Table results")}</button>
+            <button className="home-scope-action ghost" type="button" onClick={clearSearchEverywhere}>{t("Clear search")}</button>
           </div>
         )}
         {noResult && !enzymeSearchLoading && (
@@ -2654,11 +2657,11 @@ export function CompoundGraphHome({
             <p>{noResultMessage || (searchMode === 'pathway' ? 'Try different start/end compounds or fewer intermediate steps.' : 'Try a different compound name, enzyme name, EC number, or organism.')}</p>
             <div className="home-noresult-actions">
               {searchMode === 'pathway' ? (
-                <button className="home-scope-action ghost" type="button" onClick={clearSearchEverywhere}>Back to browse map</button>
+                <button className="home-scope-action ghost" type="button" onClick={clearSearchEverywhere}>{t("Back to browse map")}</button>
               ) : (
-                <button className="home-scope-action" type="button" onClick={() => onOpenSearch(searchValue.trim() || undefined)}>Search table view</button>
+                <button className="home-scope-action" type="button" onClick={() => onOpenSearch(searchValue.trim() || undefined)}>{t("Search table view")}</button>
               )}
-              <button className="home-scope-action ghost" type="button" onClick={clearSearchEverywhere}>Clear search</button>
+              <button className="home-scope-action ghost" type="button" onClick={clearSearchEverywhere}>{t("Clear search")}</button>
             </div>
           </div>
         )}
@@ -2695,10 +2698,10 @@ export function CompoundGraphHome({
             className="pw-composer-launcher"
             type="button"
             onClick={() => setComposerOpen(true)}
-            title="Show pathway search"
+            title={t("Show pathway search")}
           >
             <Route size={15} />
-            <span>Pathway search</span>
+            <span>{t("Pathway search")}</span>
           </button>
         ))}
 
@@ -2714,7 +2717,7 @@ export function CompoundGraphHome({
             title="Trace a route on the map: click compounds connected to the start, one step at a time, until you reach the end compound"
           >
             <Link2 size={13} />
-            <span>Trace</span>
+            <span>{t("Trace")}</span>
           </button>
         )}
 
@@ -2724,7 +2727,7 @@ export function CompoundGraphHome({
               <Link2 size={13} />
               <strong>{traceChain.length} node{traceChain.length === 1 ? '' : 's'}</strong>
             </span>
-            <span className="pw-trace-current" title="Current compound">{compoundName(traceCurrentId || '')}</span>
+            <span className="pw-trace-current" title={t("Current compound")}>{compoundName(traceCurrentId || '')}</span>
             {traceHint ? (
               <span className="pw-trace-hint is-error">{traceHint}</span>
             ) : (
@@ -2732,13 +2735,13 @@ export function CompoundGraphHome({
                 Click a ringed compound connected to the current one{compoundName(traceEndId || '') ? <> — finish by reaching <strong>{compoundName(traceEndId || '')}</strong></> : null}. Revisiting a node is not allowed.
               </span>
             )}
-            <button type="button" className="pw-trace-undo" onClick={undoTrace} disabled={!traceChain || traceChain.length <= 1} title="Undo the last pick">
+            <button type="button" className="pw-trace-undo" onClick={undoTrace} disabled={!traceChain || traceChain.length <= 1} title={t("Undo the last pick")}>
               <ArrowLeft size={13} />
-              <span>Undo</span>
+              <span>{t("Undo")}</span>
             </button>
-            <button type="button" className="pw-trace-cancel" onClick={cancelTrace} title="Cancel tracing and restore the previous selection">
+            <button type="button" className="pw-trace-cancel" onClick={cancelTrace} title={t("Cancel tracing and restore the previous selection")}>
               <X size={13} />
-              <span>Cancel</span>
+              <span>{t("Cancel")}</span>
             </button>
           </div>
         )}
@@ -2749,7 +2752,7 @@ export function CompoundGraphHome({
             className={`home-map-svg home-live-map ${mapDragging ? 'is-dragging' : ''}`}
             viewBox={`0 0 ${HOME_VIEWBOX_WIDTH} ${HOME_VIEWBOX_HEIGHT}`}
             role="img"
-            aria-label="Draggable compound graph"
+            aria-label={t("Draggable compound graph")}
             onPointerDown={handleMapPointerDown}
             onPointerMove={handleMapPointerMove}
             onPointerUp={finishMapPan}
@@ -2963,24 +2966,24 @@ export function CompoundGraphHome({
               <strong>{selectedNode.name}</strong>
               <div className="popover-heading-actions">
                 {selectedNode.chebiUrl ? (
-                  <a className="popover-open-link" href={selectedNode.chebiUrl} target="_blank" rel="noreferrer" title="Open in ChEBI">
+                  <a className="popover-open-link" href={selectedNode.chebiUrl} target="_blank" rel="noreferrer" title={t("Open in ChEBI")}>
                     <ArrowUpRight size={20} />
                   </a>
                 ) : null}
-                <button className="popover-close-button" type="button" onClick={() => setSelectedNodeId(null)} title="Close compound card">
+                <button className="popover-close-button" type="button" onClick={() => setSelectedNodeId(null)} title={t("Close compound card")}>
                   <X size={18} />
                 </button>
               </div>
             </div>
             <div className="popover-id">ChEBI ID : {selectedNode.chebiId || selectedNode.compoundId}</div>
             <div className="compound-structure">
-              {compoundImageUrl(selectedNode) ? <img src={compoundImageUrl(selectedNode) || undefined} alt={`${selectedNode.name} structure`} /> : <div className="structure-unavailable">No structure</div>}
+              {compoundImageUrl(selectedNode) ? <img src={compoundImageUrl(selectedNode) || undefined} alt={`${selectedNode.name} structure`} /> : <div className="structure-unavailable">{t("No structure")}</div>}
             </div>
             <div className="popover-fields">
-              <p><span>ID :</span><strong>{selectedNode.compoundId}</strong></p>
-              {selectedNode.averageMass && <p><span>Mass :</span><strong>{selectedNode.averageMass}</strong></p>}
-              {selectedNode.formula && <p><span>Formula :</span><strong>{selectedNode.formula}</strong></p>}
-              {selectedNode.smiles && <p className="popover-smiles-row"><span>Smiles :</span><strong>{selectedNode.smiles}</strong></p>}
+              <p><span>{t("ID :")}</span><strong>{selectedNode.compoundId}</strong></p>
+              {selectedNode.averageMass && <p><span>{t("Mass :")}</span><strong>{selectedNode.averageMass}</strong></p>}
+              {selectedNode.formula && <p><span>{t("Formula :")}</span><strong>{selectedNode.formula}</strong></p>}
+              {selectedNode.smiles && <p className="popover-smiles-row"><span>{t("Smiles :")}</span><strong>{selectedNode.smiles}</strong></p>}
             </div>
             {/* Compounds are not queueable: both Downloading-table pages export
                 enzymes, and a compound has no enzyme to export. Compounds still
@@ -2997,7 +3000,7 @@ export function CompoundGraphHome({
                     看起来像酶丢了。没有折叠时后半段不显示。 */}
                 <span>{expandedLoading ? 'Loading enzyme paths...' : `${expandedEdgeGroups.length} enzymes${expandedRenderUnits.length < expandedEdgeGroups.length ? ` · ${expandedRenderUnits.length} shown` : ''} · ${pairEdges.length || selectedPairTotal} edge${(pairEdges.length || selectedPairTotal) === 1 ? '' : 's'}`}</span>
               </div>
-              <button className="stack-close-button" type="button" onClick={clearPairSelection} title="Close enzyme list">
+              <button className="stack-close-button" type="button" onClick={clearPairSelection} title={t("Close enzyme list")}>
                 <X size={18} />
               </button>
             </div>
@@ -3042,7 +3045,7 @@ export function CompoundGraphHome({
                       <strong>{group.label}</strong>
                       <span>{ecNumbers.size === 0 ? 'EC n/a' : `${ecNumbers.size} EC`}</span>
                       <small>{members.length.toLocaleString()} entries</small>
-                      <button type="button" onClick={() => openMergedUnit(group)}>Show all</button>
+                      <button type="button" onClick={() => openMergedUnit(group)}>{t("Show all")}</button>
                     </div>
                   </article>
                 )
@@ -3055,7 +3058,7 @@ export function CompoundGraphHome({
                   <button className="enzyme-card-copy" type="button" onClick={() => setSelectedEdgeId(group.representative.edgeId)}>
                     <h3>{edge.card?.primaryName || edge.label}</h3>
                     {blastHit && (
-                      <span className="enzyme-card-blast-chip" title="BLAST E-value">E-value {formatScopeEValue(blastHit.eValue)}</span>
+                      <span className="enzyme-card-blast-chip" title={t("BLAST E-value")}>E-value {formatScopeEValue(blastHit.eValue)}</span>
                     )}
                     <EnzymeScoreChip score={edge.card?.deepSolnetScore} membrane={edge.card?.membrane} />
                     <p>{edge.card?.organismName || 'Unknown organism'}</p>
@@ -3066,7 +3069,7 @@ export function CompoundGraphHome({
                     <strong>{group.label}</strong>
                     <span>{edge.card?.ecNumber || 'EC n/a'}</span>
                     <small>{edge.card?.databaseCode || enzymeId}</small>
-                    <button type="button" onClick={() => onOpenEnzyme(enzymeId)}>Open detail</button>
+                    <button type="button" onClick={() => onOpenEnzyme(enzymeId)}>{t("Open detail")}</button>
                   </div>
                 </article>
               )
@@ -3078,11 +3081,11 @@ export function CompoundGraphHome({
           <div className="pathway-result-card live-pathway-card map-draggable-panel" style={panelStyle}>
             <div className="stack-heading pathway-heading map-panel-drag-handle" onPointerDown={handlePanelPointerDown} onPointerMove={handlePanelPointerMove} onPointerUp={finishPanelDrag} onPointerCancel={finishPanelDrag}>
               <div>
-                <strong>Pathway results</strong>
+                <strong>{t("Pathway results")}</strong>
                 <span>{pathwaySession.total} route{pathwaySession.total === 1 ? '' : 's'} · {pathwaySession.query}</span>
               </div>
               <div className="pathway-heading-actions">
-                <button className="stack-close-button" type="button" onClick={clearSearchEverywhere} title="Close pathway results and clear the search">
+                <button className="stack-close-button" type="button" onClick={clearSearchEverywhere} title={t("Close pathway results and clear the search")}>
                   <X size={18} />
                 </button>
               </div>
@@ -3117,7 +3120,7 @@ export function CompoundGraphHome({
                       className="pathway-card-main"
                       onClick={() => selectPathwayCard(card)}
                       aria-pressed={isActive}
-                      title="Highlight this pathway on the map"
+                      title={t("Highlight this pathway on the map")}
                     >
                       <span className="pathway-row-index">{index + 1}</span>
                       <span className="pathway-row-main">
@@ -3138,7 +3141,7 @@ export function CompoundGraphHome({
                         onToggleQueue(queueEntity)
                       }}
                       aria-pressed={queued}
-                      title={queued ? 'Remove route from downloading table' : 'Add route to downloading table'}
+                      title={queued ? t('Remove route from downloading table') : t('Add route to downloading table')}
                     >
                       {queued ? <Check size={14} /> : <Download size={14} />}
                     </button>
@@ -3150,10 +3153,10 @@ export function CompoundGraphHome({
                         openPathwayDetail(card)
                       }}
                       aria-label={`View route ${index + 1} detail`}
-                      title="View this route's detail"
+                      title={t("View this route's detail")}
                     >
                       <ArrowUpRight size={13} />
-                      <span>Detail</span>
+                      <span>{t("Detail")}</span>
                     </button>
                   </div>
                 )
@@ -3169,7 +3172,7 @@ export function CompoundGraphHome({
                 <strong>{selectedLibraryItem.name}</strong>
                 <span>{selectedLibraryItem.subtitle}</span>
               </div>
-              <button className="stack-close-button" type="button" onClick={() => setSelectedLibraryItem(null)} title="Close result card">
+              <button className="stack-close-button" type="button" onClick={() => setSelectedLibraryItem(null)} title={t("Close result card")}>
                 <X size={18} />
               </button>
             </div>
@@ -3184,17 +3187,17 @@ export function CompoundGraphHome({
             </div>
             {selectedLibraryItem.kind === 'enzyme' && (
               <button className="library-open-button" type="button" onClick={() => onOpenEnzyme(selectedLibraryItem.id)}>
-                Open detail
+                {t("Open detail")}
               </button>
             )}
           </div>
         )}
 
         {detailOpen && pathwayDetail && (
-          <div className="pw-detail-bar" role="region" aria-label="Route detail">
-            <button className="pw-detail-back" type="button" onClick={closePathwayDetail} title="Back to pathway results">
+          <div className="pw-detail-bar" role="region" aria-label={t("Route detail")}>
+            <button className="pw-detail-back" type="button" onClick={closePathwayDetail} title={t("Back to pathway results")}>
               <ArrowLeft size={14} />
-              <span>Back to results</span>
+              <span>{t("Back to results")}</span>
             </button>
             <div className="pw-detail-summary">
               <strong>
@@ -3212,11 +3215,11 @@ export function CompoundGraphHome({
               type="button"
               onClick={openPicker}
               disabled={pickerOpen}
-              aria-label="Download route"
-              title="Pick an enzyme for each step, then add to the downloading table"
+              aria-label={t("Download route")}
+              title={t("Pick an enzyme for each step, then add to the downloading table")}
             >
               <Download size={14} />
-              <span>Download</span>
+              <span>{t("Download")}</span>
             </button>
           </div>
         )}
@@ -3253,10 +3256,10 @@ export function CompoundGraphHome({
             </>
           ) : (
             <>
-              <span>Total compounds: {graph?.nodes.length ?? 0}</span>
-              <span>Total enzyme edges: {graph?.edges.length ?? 0}</span>
-              <span>Visible compound pairs: {viewModel.pairs.length}</span>
-              <span>Visible map edges: {visibleEdgeCount}</span>
+              <span>{t('Total compounds')}: {graph?.nodes.length ?? 0}</span>
+              <span>{t('Total enzyme edges')}: {graph?.edges.length ?? 0}</span>
+              <span>{t('Visible compound pairs')}: {viewModel.pairs.length}</span>
+              <span>{t('Visible map edges')}: {visibleEdgeCount}</span>
             </>
           )}
         </div>
@@ -3334,6 +3337,7 @@ function PathwaySearchComposer({
   onDismissError: () => void
   onCollapse: () => void
 }) {
+  const t = useT()
   type ComposerSlot = PathwayComposerSlot
   type ActiveField = { field: 'start' | 'end' | 'via'; viaIndex: number }
   const newSlot = (): ComposerSlot => ({ id: null, text: '' })
@@ -3497,7 +3501,7 @@ function PathwaySearchComposer({
         )}
       </div>
       {onRemove && (
-        <button className="pw-slot-remove" type="button" onClick={onRemove} title="Remove this intermediate" aria-label="Remove this intermediate">
+        <button className="pw-slot-remove" type="button" onClick={onRemove} title={t("Remove this intermediate")} aria-label={t("Remove this intermediate")}>
           <X size={14} />
         </button>
       )}
@@ -3515,13 +3519,13 @@ function PathwaySearchComposer({
         }
       }}
     >
-      <span className="pw-composer-title">Pathway</span>
+      <span className="pw-composer-title">{t("Pathway")}</span>
       <button
         className="pw-composer-collapse"
         type="button"
         onClick={onCollapse}
-        title="Hide pathway search bar"
-        aria-label="Hide pathway search bar"
+        title={t("Hide pathway search bar")}
+        aria-label={t("Hide pathway search bar")}
       >
         <ChevronsUp size={15} />
       </button>
@@ -3545,17 +3549,17 @@ function PathwaySearchComposer({
         type="button"
         onClick={swapEndpoints}
         disabled={!canSwap}
-        title="Swap the start and end compounds"
-        aria-label="Swap the start and end compounds"
+        title={t("Swap the start and end compounds")}
+        aria-label={t("Swap the start and end compounds")}
       >
         <ArrowLeftRight size={14} />
       </button>
       <div className="pw-composer-actions">
-        <button className="pw-add-via" type="button" onClick={addVia} title="Add an intermediate compound the chain must pass through">
+        <button className="pw-add-via" type="button" onClick={addVia} title={t("Add an intermediate compound the chain must pass through")}>
           <Plus size={14} /> Add via
         </button>
-        <span className="pw-composer-hint">≤ 6 steps · via order kept</span>
-        <button className="pw-run" type="button" disabled={!canRun} onClick={submit} title="Run pathway search">
+        <span className="pw-composer-hint">{t("≤ 6 steps · via order kept")}</span>
+        <button className="pw-run" type="button" disabled={!canRun} onClick={submit} title={t("Run pathway search")}>
           {busy ? <Loader2 size={15} className="spin" /> : null}
           {busy ? 'Searching…' : 'Find pathways'}
         </button>
@@ -3579,6 +3583,7 @@ function PathwaySuggestions({
   loading: boolean
   onPick: (item: CompoundSuggestion) => void
 }) {
+  const t = useT()
   if (loading && items.length === 0) {
     return (
       <div className="pw-slot-suggestions" onPointerDown={(event) => event.preventDefault()}>
@@ -3596,7 +3601,7 @@ function PathwaySuggestions({
           </button>
         ))
       ) : (
-        <div className="pw-suggest-placeholder">No matching compounds in the library.</div>
+        <div className="pw-suggest-placeholder">{t("No matching compounds in the library.")}</div>
       )}
     </div>
   )
@@ -3651,6 +3656,7 @@ export function EnzymeDetailView({ enzymeId, onBack, onToggleQueue, isQueued, qu
   searchSet: string[]
   onSearchSetChange: (next: string[]) => void
 }) {
+  const t = useT()
   const [detail, setDetail] = useState<EnzymeDetailData | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -3760,7 +3766,7 @@ export function EnzymeDetailView({ enzymeId, onBack, onToggleQueue, isQueued, qu
         <header className="graph-top-nav enzyme-topnav">
           {/* `onBack` is a real history pop, so it returns wherever the user came
               from — which may be the search table, not the home map. */}
-          <button type="button" className="atlas-brand" onClick={onBack} title="Back" aria-label="Back">
+          <button type="button" className="atlas-brand" onClick={onBack} title={t("Back")} aria-label={t("Back")}>
             <span className="atlas-logo">
               <img className="atlas-logo-mark" src="/starase-atlas-logo.png" alt="" />
             </span>
@@ -3770,45 +3776,45 @@ export function EnzymeDetailView({ enzymeId, onBack, onToggleQueue, isQueued, qu
           <div className="enzyme-topnav-slot">
             <SearchSetControl value={searchSet} onChange={onSearchSetChange} />
 
-            <button className="download-list-button" type="button" onClick={onOpenDownloads} title="Open download list">
+            <button className="download-list-button" type="button" onClick={onOpenDownloads} title={t("Open download list")}>
               <Download size={15} />
-              <span>Downloading table</span>
+              <span>{t("Downloading table")}</span>
               {queueCount > 0 && <span className="download-list-badge">{queueCount}</span>}
             </button>
 
             <div className="home-search-bar enzyme-search-bar">
-              <div className="home-mode-toggle" role="group" aria-label="Search mode">
-                <button type="button" className="is-active" aria-current="page" title="Search compounds and enzymes by keyword / BLAST">Enzyme</button>
-                <button type="button" onClick={onOpenPathwaySearch} title="Find compound chains from a start through optional waypoints to an end">Pathway</button>
+              <div className="home-mode-toggle" role="group" aria-label={t("Search mode")}>
+                <button type="button" className="is-active" aria-current="page" title={t("Search compounds and enzymes by keyword / BLAST")}>{t("Enzyme")}</button>
+                <button type="button" onClick={onOpenPathwaySearch} title={t("Find compound chains from a start through optional waypoints to an end")}>{t("Pathway")}</button>
               </div>
               <input
                 value={searchDraft}
                 onChange={(event) => setSearchDraft(event.target.value)}
                 onKeyDown={(event) => { if (event.key === 'Enter') onOpenSearch(searchDraft) }}
-                placeholder="Search enzymes by name, UniProt, EC or gene…"
-                aria-label="Search the enzyme library"
+                placeholder={t('Search enzymes by name, UniProt, EC or gene…')}
+                aria-label={t("Search the enzyme library")}
               />
-              <div className="home-result-toggle" role="group" aria-label="Search result view">
-                <button type="button" onClick={() => onOpenMap(searchDraft)} title="Show these results on the map">Map</button>
-                <button type="button" className="is-active" aria-current="page">Table</button>
+              <div className="home-result-toggle" role="group" aria-label={t("Search result view")}>
+                <button type="button" onClick={() => onOpenMap(searchDraft)} title={t("Show these results on the map")}>{t("Map")}</button>
+                <button type="button" className="is-active" aria-current="page">{t("Table")}</button>
               </div>
-              <button className="home-search-submit" type="button" onClick={() => onOpenSearch(searchDraft)} title="Search">
+              <button className="home-search-submit" type="button" onClick={() => onOpenSearch(searchDraft)} title={t("Search")}>
                 <Search size={18} />
               </button>
             </div>
           </div>
 
-          <nav className="graph-primary-nav" aria-label="Enzyme detail navigation">
-            <button type="button" onClick={() => onOpenSearch('')}>Data Browser</button>
+          <nav className="graph-primary-nav" aria-label={t("Enzyme detail navigation")}>
+            <button type="button" onClick={() => onOpenSearch('')}>{t("Data Browser")}</button>
             <button type="button" onClick={onOpenBlast}>BLAST</button>
-            <button type="button" onClick={() => setStructureOpen(true)}>Structure search</button>
+            <button type="button" onClick={() => setStructureOpen(true)}>{t("Structure search")}</button>
             <span className="graph-user-chip">NJU - China 2026</span>
           </nav>
         </header>
 
         <div className="enzyme-atlas-body">
-          <aside className="enzyme-module-rail" aria-label="Enzyme detail sections">
-            <div className="enzyme-module-rail-title">Sections</div>
+          <aside className="enzyme-module-rail" aria-label={t("Enzyme detail sections")}>
+            <div className="enzyme-module-rail-title">{t("Sections")}</div>
             <nav>
               {ENZYME_MODULES.map((module) => (
                 <button
@@ -3855,7 +3861,7 @@ export function EnzymeDetailView({ enzymeId, onBack, onToggleQueue, isQueued, qu
               {loading && <div className="detail-status"><Loader2 size={18} className="spin" /> Loading enzyme detail...</div>}
               {error && <div className="detail-status error-state"><X size={18} /> {error}</div>}
               {!enzymeId && !loading && (
-                <div className="detail-empty-card"><Dna size={30} /><h2>No enzyme selected</h2><button className="primary-button" type="button" onClick={onBack}><ArrowLeft size={15} /> Back</button></div>
+                <div className="detail-empty-card"><Dna size={30} /><h2>{t("No enzyme selected")}</h2><button className="primary-button" type="button" onClick={onBack}><ArrowLeft size={15} /> Back</button></div>
               )}
 
               {detail && (
@@ -3864,12 +3870,12 @@ export function EnzymeDetailView({ enzymeId, onBack, onToggleQueue, isQueued, qu
                       lives on the card itself; every other external database is
                       already linked from Cross-references, so there is no link card. */}
                   <section className="enzyme-module" data-module="basic" id="enzyme-module-basic">
-                    <div className="section-title-row"><h3>Basic Information</h3></div>
+                    <div className="section-title-row"><h3>{t("Basic Information")}</h3></div>
                     <div className="detail-card main-detail-card">
                       <div className="detail-card-topline">
                         <span className="detail-chip"><Link2 size={13} /> {detail.databaseCode}</span>
                         {detail.sourceType && (
-                          <span className={`search-table-source-tag ${detail.sourceType}`} title="This enzyme's data source">
+                          <span className={`search-table-source-tag ${detail.sourceType}`} title={t("This enzyme's data source")}>
                             {sourceLabel(detail.sourceType)}
                           </span>
                         )}
@@ -3878,23 +3884,23 @@ export function EnzymeDetailView({ enzymeId, onBack, onToggleQueue, isQueued, qu
                       <div className="detail-name-stack"><h2>{detail.primaryName}</h2><p>{detail.organismName || 'Unknown organism'}</p></div>
                       <div className="tag-row compact">{names.map((name) => <span key={name} className="tag">{name}</span>)}</div>
                       <dl className="detail-facts">
-                        <div><dt>Library code</dt><dd>{detail.databaseCode}</dd></div>
-                        <div><dt>Species</dt><dd>{detail.organismName || 'n/a'}</dd></div>
+                        <div><dt>{t("Library code")}</dt><dd>{detail.databaseCode}</dd></div>
+                        <div><dt>{t("Species")}</dt><dd>{detail.organismName || 'n/a'}</dd></div>
                         <div><dt>UniProt</dt><dd>{detail.uniprotId || 'n/a'}</dd></div>
-                        <div><dt>Data source</dt><dd>{detail.sourceType ? sourceLabel(detail.sourceType) : 'n/a'}</dd></div>
-                        <div><dt>Enzyme review</dt><dd>{detail.reviewStatus || 'n/a'}</dd></div>
-                        <div><dt>Gene name</dt><dd>{detail.gene?.geneName || 'n/a'}</dd></div>
-                        <div><dt>Length</dt><dd>{sequenceLength ? `${sequenceLength} aa` : 'n/a'}</dd></div>
+                        <div><dt>{t("Data source")}</dt><dd>{detail.sourceType ? sourceLabel(detail.sourceType) : 'n/a'}</dd></div>
+                        <div><dt>{t("Enzyme review")}</dt><dd>{detail.reviewStatus || 'n/a'}</dd></div>
+                        <div><dt>{t("Gene name")}</dt><dd>{detail.gene?.geneName || 'n/a'}</dd></div>
+                        <div><dt>{t("Length")}</dt><dd>{sequenceLength ? `${sequenceLength} aa` : 'n/a'}</dd></div>
                         <div><dt>Mass (Da)</dt><dd>{detail.mass ? Math.round(detail.mass).toLocaleString() : 'n/a'}</dd></div>
-                        <div><dt>DeepSolNet Score</dt><dd>{detail.deepSolnetScore != null ? detail.deepSolnetScore.toFixed(3) : 'n/a'}</dd></div>
-                        <div><dt>Membrane</dt><dd>{membraneLabel(detail.membrane)}</dd></div>
+                        <div><dt>{t("DeepSolNet Score")}</dt><dd>{detail.deepSolnetScore != null ? detail.deepSolnetScore.toFixed(3) : 'n/a'}</dd></div>
+                        <div><dt>{t("Membrane")}</dt><dd>{membraneLabel(detail.membrane)}</dd></div>
                       </dl>
                     </div>
                   </section>
 
                   {/* 2. 反应信息 */}
                   <section className="enzyme-module" data-module="reactions" id="enzyme-module-reactions">
-                    <div className="section-title-row"><h3>Reactions</h3></div>
+                    <div className="section-title-row"><h3>{t("Reactions")}</h3></div>
                     {detail.reactions.length > 0 ? (
                       <div className="reaction-list">
                         {detail.reactions.map((reaction) => (
@@ -3912,41 +3918,41 @@ export function EnzymeDetailView({ enzymeId, onBack, onToggleQueue, isQueued, qu
                                   Labelling it plainly made a TrEMBL enzyme look Swiss-Prot —
                                   the enzyme's own source is the "Data source" fact above. */}
                               <div title="The reaction's own source. Reactions are shared between enzymes, so this is always Swiss-Prot even when the enzyme above is TrEMBL.">
-                                <span>Reaction source</span><strong>{reaction.sourceType}</strong>
+                                <span>{t("Reaction source")}</span><strong>{reaction.sourceType}</strong>
                               </div>
-                              <div><span>Reaction review</span><strong>{reaction.reviewStatus}</strong></div>
+                              <div><span>{t("Reaction review")}</span><strong>{reaction.reviewStatus}</strong></div>
                             </div>
                             <div className="reaction-compounds">
-                              <div><span>Substrates</span><div className="tag-row compact">{reaction.substrates.map((compound) => <CompoundTag key={compound.compoundId} compound={compound} />)}</div></div>
-                              <div><span>Products</span><div className="tag-row compact">{reaction.products.map((compound) => <CompoundTag key={compound.compoundId} compound={compound} />)}</div></div>
+                              <div><span>{t("Substrates")}</span><div className="tag-row compact">{reaction.substrates.map((compound) => <CompoundTag key={compound.compoundId} compound={compound} />)}</div></div>
+                              <div><span>{t("Products")}</span><div className="tag-row compact">{reaction.products.map((compound) => <CompoundTag key={compound.compoundId} compound={compound} />)}</div></div>
                             </div>
                             <ReactionAtomMap rheaId={reaction.rheaId} reactionId={reaction.reactionId} />
                           </article>
                         ))}
                       </div>
-                    ) : <p className="muted-copy">No reaction records available.</p>}
+                    ) : <p className="muted-copy">{t("No reaction records available.")}</p>}
                   </section>
 
                   {/* 3. 序列 — canonical first, then one block per isoform */}
                   <section className="enzyme-module" data-module="sequence" id="enzyme-module-sequence">
                     <div className="section-title-row">
-                      <h3>Sequence</h3>
-                      {canonicalSequence && <button className="small-text-button" type="button" onClick={() => void navigator.clipboard?.writeText(canonicalSequence)}>Copy</button>}
+                      <h3>{t("Sequence")}</h3>
+                      {canonicalSequence && <button className="small-text-button" type="button" onClick={() => void navigator.clipboard?.writeText(canonicalSequence)}>{t("Copy")}</button>}
                     </div>
 
-                    {!canonicalSequence && isoforms.length === 0 && <p className="muted-copy">No amino acid sequence available.</p>}
+                    {!canonicalSequence && isoforms.length === 0 && <p className="muted-copy">{t("No amino acid sequence available.")}</p>}
 
                     {canonicalSequence && (
                       <div className="detail-card enzyme-sequence-block">
                         <div className="enzyme-sequence-head">
-                          <strong>Canonical</strong>
+                          <strong>{t("Canonical")}</strong>
                           {canonicalIsoform?.isoformId && <span className="enzyme-sequence-badge is-id">Isoform {canonicalIsoform.isoformId}</span>}
                           <span className="enzyme-sequence-badge">{sequenceLength || canonicalSequence.length} aa</span>
                           {canonicalMassValue != null
                             ? <span className="enzyme-sequence-badge">{Math.round(canonicalMassValue).toLocaleString()} Da</span>
                             : detail.mass ? <span className="enzyme-sequence-badge">{Math.round(detail.mass).toLocaleString()} Da</span> : null}
                         </div>
-                        <div className="amino-sequence-view" aria-label="Canonical amino acid sequence">
+                        <div className="amino-sequence-view" aria-label={t("Canonical amino acid sequence")}>
                           {sequenceRows.map((row) => (
                             <div key={row.start} className="amino-sequence-row">
                               <div className="sequence-ruler"><span />{row.chunks.map((chunk, index) => <span key={`${row.start}:${index}`}>{row.start + index * 10 + chunk.length - 1}</span>)}</div>
@@ -3974,7 +3980,7 @@ export function EnzymeDetailView({ enzymeId, onBack, onToggleQueue, isQueued, qu
                             {/* 变体自己的分。全库只有 30 条真变体有 —— 其余是 null，不渲染。
                                 canonical 块上不重复显示，那里的分就是酶级那个。 */}
                             {isoform.deepSolnetScore != null && (
-                              <span className="enzyme-sequence-badge" title="DeepSolNet model reference score — not a solubility label">DeepSolNet Score {isoform.deepSolnetScore.toFixed(3)}</span>
+                              <span className="enzyme-sequence-badge" title={t("DeepSolNet model reference score — not a solubility label")}>DeepSolNet Score {isoform.deepSolnetScore.toFixed(3)}</span>
                             )}
                             {isoform.isoformLength != null && <span className="enzyme-sequence-badge">{isoform.isoformLength} aa</span>}
                             {isoform.isoformMass && <span className="enzyme-sequence-badge">{Number(parseMass(isoform.isoformMass) || 0).toLocaleString()} Da</span>}
@@ -3984,7 +3990,7 @@ export function EnzymeDetailView({ enzymeId, onBack, onToggleQueue, isQueued, qu
                             {massDeltaLabel && (
                               <span className={`enzyme-isoform-delta ${massDeltaValue && massDeltaValue > 0 ? 'is-up' : 'is-down'}`}>{massDeltaLabel}</span>
                             )}
-                            {isoform.sequence && <button className="small-text-button" type="button" onClick={() => void navigator.clipboard?.writeText(isoform.sequence || '')}>Copy</button>}
+                            {isoform.sequence && <button className="small-text-button" type="button" onClick={() => void navigator.clipboard?.writeText(isoform.sequence || '')}>{t("Copy")}</button>}
                           </div>
                           {isoformRows.length > 0 ? (
                             <div className="amino-sequence-view" aria-label={`Isoform ${label} amino acid sequence`}>
@@ -3995,7 +4001,7 @@ export function EnzymeDetailView({ enzymeId, onBack, onToggleQueue, isQueued, qu
                                 </div>
                               ))}
                             </div>
-                          ) : <p className="muted-copy">No sequence recorded for this isoform.</p>}
+                          ) : <p className="muted-copy">{t("No sequence recorded for this isoform.")}</p>}
                         </div>
                       )
                     })}
@@ -4005,10 +4011,10 @@ export function EnzymeDetailView({ enzymeId, onBack, onToggleQueue, isQueued, qu
                       dataset every term is a biological process, so the module
                       renders `goTerms` as-is. */}
                   <section className="enzyme-module" data-module="process" id="enzyme-module-process">
-                    <div className="section-title-row"><h3>Biological Process</h3></div>
+                    <div className="section-title-row"><h3>{t("Biological Process")}</h3></div>
                     {detail.goTerms.length > 0 ? (
                       <div className="enzyme-xref-table is-two-col">
-                        <div className="enzyme-xref-head"><span>GO ID</span><span>Biological process</span></div>
+                        <div className="enzyme-xref-head"><span>{t("GO ID")}</span><span>{t("Biological process")}</span></div>
                         <div className="enzyme-xref-body">
                           {detail.goTerms.map((term, index) => (
                             <div key={`${term.goId || 'go'}:${index}`} className="enzyme-xref-row">
@@ -4020,15 +4026,15 @@ export function EnzymeDetailView({ enzymeId, onBack, onToggleQueue, isQueued, qu
                           ))}
                         </div>
                       </div>
-                    ) : <p className="muted-copy">No biological process annotations available.</p>}
+                    ) : <p className="muted-copy">{t("No biological process annotations available.")}</p>}
                   </section>
 
                   {/* 5. 相关序列编号及链接 — nucleotide paired with its protein */}
                   <section className="enzyme-module" data-module="xref" id="enzyme-module-xref">
-                    <div className="section-title-row"><h3>Cross-references</h3></div>
+                    <div className="section-title-row"><h3>{t("Cross-references")}</h3></div>
                     {sequenceXrefRows.length > 0 ? (
                       <div className="enzyme-xref-table is-seq-pairs">
-                        <div className="enzyme-xref-head"><span>Nucleotide sequence</span><span>Protein sequence</span><span>Molecule type</span></div>
+                        <div className="enzyme-xref-head"><span>{t("Nucleotide sequence")}</span><span>{t("Protein sequence")}</span><span>{t("Molecule type")}</span></div>
                         <div className="enzyme-xref-body">
                           {sequenceXrefRows.map((row) => (
                             <div key={row.key} className="enzyme-xref-row">
@@ -4039,12 +4045,12 @@ export function EnzymeDetailView({ enzymeId, onBack, onToggleQueue, isQueued, qu
                           ))}
                         </div>
                       </div>
-                    ) : <p className="muted-copy">No sequence links available.</p>}
+                    ) : <p className="muted-copy">{t("No sequence links available.")}</p>}
                   </section>
 
                   {/* 6. 参考文献 */}
                   <section className="enzyme-module" data-module="references" id="enzyme-module-references">
-                    <div className="section-title-row"><h3>References</h3></div>
+                    <div className="section-title-row"><h3>{t("References")}</h3></div>
                     <div className="detail-reference-list">
                       {detail.evidence.length > 0 ? detail.evidence.map((item, index) => {
                         const citation = [item.journal, item.volume, item.pages, item.publicationYear].filter(Boolean).join(' · ')
@@ -4071,13 +4077,13 @@ export function EnzymeDetailView({ enzymeId, onBack, onToggleQueue, isQueued, qu
                               </div>
                             </div>
                             <div className="reference-links">
-                              {extraUrl && <a href={extraUrl} target="_blank" rel="noreferrer">Source</a>}
+                              {extraUrl && <a href={extraUrl} target="_blank" rel="noreferrer">{t("Source")}</a>}
                               {doiUrl && <a href={doiUrl} target="_blank" rel="noreferrer">DOI</a>}
                               {pubmedUrl && <a href={pubmedUrl} target="_blank" rel="noreferrer">PubMed</a>}
                             </div>
                           </div>
                         )
-                      }) : <p className="muted-copy">No evidence links available.</p>}
+                      }) : <p className="muted-copy">{t("No evidence links available.")}</p>}
                     </div>
                   </section>
                 </>
@@ -4253,12 +4259,13 @@ function reactionAtomMapUrl(rheaId: string) {
  *  licence requires. A reaction without a drawing drops the panel entirely
  *  rather than leaving a broken image in the card. */
 function ReactionAtomMap({ rheaId, reactionId }: { rheaId?: string | null; reactionId: string }) {
+  const t = useT()
   const [failed, setFailed] = useState(false)
   if (!rheaId || failed) return null
   return (
     <div className="atom-map-wrap">
       <div className="atom-map-head">
-        <span>Atom map</span>
+        <span>{t("Atom map")}</span>
         <a href={`https://www.rhea-db.org/rhea/${encodeURIComponent(rheaId.split(':').pop() || rheaId)}`} target="_blank" rel="noreferrer">
           {rheaId} <ExternalLink size={11} />
         </a>
@@ -5780,6 +5787,7 @@ function PathwayEnzymePickerDrawer({
   onAdd: (entity: Entity) => void
   onOpenEnzyme: (enzymeId: string) => void
 }) {
+  const t = useT()
   /** enzymeId list per 1-based step number (multi-select, freely revisitable). */
   const [selection, setSelection] = useState<Record<number, string[]>>({})
 
@@ -5850,13 +5858,13 @@ function PathwayEnzymePickerDrawer({
   const activeCandidates = activeStep && !activeLoading ? candidatesFor(activeStep) : []
 
   return (
-    <aside className="pw-enzyme-drawer" role="dialog" aria-label="Pick an enzyme for each pathway step">
+    <aside className="pw-enzyme-drawer" role="dialog" aria-label={t("Pick an enzyme for each pathway step")}>
       <header className="pw-drawer-header">
         <div>
-          <strong>Select enzymes per step</strong>
+          <strong>{t("Select enzymes per step")}</strong>
           <span>Click a step below, or its edge on the map, to switch · you can change your picks at any time</span>
         </div>
-        <button type="button" className="pw-drawer-close" onClick={onClose} title="Close" aria-label="Close the enzyme picker">
+        <button type="button" className="pw-drawer-close" onClick={onClose} title={t("Close")} aria-label={t("Close the enzyme picker")}>
           <X size={18} />
         </button>
       </header>
@@ -5900,7 +5908,7 @@ function PathwayEnzymePickerDrawer({
                 <Loader2 size={14} className="pw-drawer-spin" /> Loading enzymes for this step…
               </p>
             ) : activeCandidates.length === 0 ? (
-              <p className="pw-drawer-step-empty">No enzyme data for this step</p>
+              <p className="pw-drawer-step-empty">{t("No enzyme data for this step")}</p>
             ) : (
               <div className="pw-drawer-candidates">
                 {activeCandidates.map((enzyme) => {
@@ -5920,7 +5928,7 @@ function PathwayEnzymePickerDrawer({
                               {enzyme.organismName ? <span className="pw-drawer-candidate-organism">{enzyme.organismName}</span> : null}
                               {enzyme.sourceType ? <span className="pw-drawer-candidate-src">{enzyme.sourceType}</span> : null}
                               {enzyme.deepSolnetScore != null ? (
-                                <span className="pw-drawer-candidate-src" title="DeepSolNet model reference score — not a solubility label">
+                                <span className="pw-drawer-candidate-src" title={t("DeepSolNet model reference score — not a solubility label")}>
                                   DeepSolNet Score {enzyme.deepSolnetScore.toFixed(3)}{enzyme.membrane === MEMBRANE_VALUE ? ' · membrane' : ''}
                                 </span>
                               ) : null}
@@ -5951,7 +5959,7 @@ function PathwayEnzymePickerDrawer({
           {chosenStepCount}/{steps.length} steps picked
         </span>
         <button type="button" className="pw-drawer-add" disabled={!canAdd} onClick={handleAdd}>
-          <Check size={15} /> Add to downloading table
+          <Check size={15} /> {t('Add to downloading table')}
         </button>
       </footer>
     </aside>
@@ -5991,6 +5999,7 @@ function MergedEnzymeDrawer({
   /** 批量入队。逐条调 `onToggleQueue` 是 O(n²)（见 App 的 `queueEntities`）。 */
   onQueueMany: (entries: Entity[]) => void
 }) {
+  const t = useT()
   const members = unit.members ?? []
   const [filter, setFilter] = useState('')
   const [visibleCount, setVisibleCount] = useState(MERGED_DRAWER_PAGE)
@@ -6041,7 +6050,7 @@ function MergedEnzymeDrawer({
           <strong>{sourceLabel(unit.sourceType || '')} group</strong>
           <span>{compoundLabel(unit.sourceId)} → {compoundLabel(unit.targetId)}</span>
         </div>
-        <button type="button" className="pw-drawer-close" onClick={onClose} title="Close" aria-label="Close the entry list">
+        <button type="button" className="pw-drawer-close" onClick={onClose} title={t("Close")} aria-label={t("Close the entry list")}>
           <X size={17} />
         </button>
       </header>
@@ -6049,9 +6058,9 @@ function MergedEnzymeDrawer({
       <div className="merged-drawer-bar">
         <div className="pw-drawer-candidates-search">
           <Search size={13} />
-          <input value={filter} onChange={(event) => setFilter(event.target.value)} placeholder="Filter by accession, name or organism…" />
+          <input value={filter} onChange={(event) => setFilter(event.target.value)} placeholder={t("Filter by accession, name or organism…")} />
           {filter && (
-            <button type="button" onClick={() => setFilter('')} title="Clear filter">
+            <button type="button" onClick={() => setFilter('')} title={t("Clear filter")}>
               <X size={12} />
             </button>
           )}
@@ -6088,7 +6097,7 @@ function MergedEnzymeDrawer({
                         {organism ? <span className="pw-drawer-candidate-organism">{organism}</span> : null}
                         <span className="pw-drawer-candidate-src">{sourceLabel(edge.sourceType)}</span>
                         {edge.card?.deepSolnetScore != null ? (
-                          <span className="pw-drawer-candidate-src" title="DeepSolNet model reference score — not a solubility label">
+                          <span className="pw-drawer-candidate-src" title={t("DeepSolNet model reference score — not a solubility label")}>
                             DeepSolNet Score {edge.card.deepSolnetScore.toFixed(3)}{edge.card.membrane === MEMBRANE_VALUE ? ' · membrane' : ''}
                           </span>
                         ) : null}

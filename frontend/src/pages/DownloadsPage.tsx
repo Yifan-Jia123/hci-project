@@ -22,6 +22,7 @@ import type {
 } from '../api'
 import { fileNameFromUrl, saveFile } from '../lib/saveFile'
 import { StructureSearchDrawer } from '../components/StructureSearchDrawer'
+import { useT } from '../lib/i18n'
 
 type Tab = 'enzymes' | 'pathways'
 
@@ -139,6 +140,7 @@ export function DownloadsPage({
   /** The Pathway half of the mode toggle: the map opens its chain composer. */
   onOpenPathwaySearch: () => void
 }) {
+  const t = useT()
   const [activeTab, setActiveTab] = useState<Tab>('enzymes')
   const [catalog, setCatalog] = useState<DownloadFieldCatalog | null>(null)
   const [catalogError, setCatalogError] = useState<string | null>(null)
@@ -381,7 +383,7 @@ export function DownloadsPage({
           type="button"
           className="atlas-brand"
           onClick={onResetHome}
-          title="Back to the Atlas home map"
+          title={t("Back to the Atlas home map")}
           aria-label="Starase Atlas home"
         >
           <span className="atlas-logo">
@@ -391,16 +393,16 @@ export function DownloadsPage({
         </button>
 
         <div className="downloads-topnav-slot">
-          <span className="download-list-button is-current" aria-current="page" title="This is the download list">
+          <span className="download-list-button is-current" aria-current="page" title={t("This is the download list")}>
             <Download size={15} />
-            <span>Downloading table</span>
+            <span>{t("Downloading table")}</span>
             {queueCount > 0 && <span className="download-list-badge">{queueCount}</span>}
           </span>
 
           <div className="home-search-bar downloads-search-bar">
-            <div className="home-mode-toggle" role="group" aria-label="Search mode">
-              <button type="button" className="is-active" aria-current="page" title="Search compounds and enzymes by keyword / BLAST">Enzyme</button>
-              <button type="button" onClick={onOpenPathwaySearch} title="Find compound chains from a start through optional waypoints to an end">Pathway</button>
+            <div className="home-mode-toggle" role="group" aria-label={t("Search mode")}>
+              <button type="button" className="is-active" aria-current="page" title={t("Search compounds and enzymes by keyword / BLAST")}>{t("Enzyme")}</button>
+              <button type="button" onClick={onOpenPathwaySearch} title={t("Find compound chains from a start through optional waypoints to an end")}>{t("Pathway")}</button>
             </div>
             <input
               value={searchDraft}
@@ -409,27 +411,27 @@ export function DownloadsPage({
                 if (event.key === 'Enter') onOpenSearch(searchDraft)
               }}
               placeholder="Search enzymes by name, UniProt, EC or gene…"
-              aria-label="Search the enzyme library"
+              aria-label={t("Search the enzyme library")}
             />
-            <div className="home-result-toggle" role="group" aria-label="Search result view">
-              <button type="button" onClick={() => onOpenMap(searchDraft)} title="Show these results on the map">Map</button>
-              <button type="button" className="is-active" aria-current="page">Table</button>
+            <div className="home-result-toggle" role="group" aria-label={t("Search result view")}>
+              <button type="button" onClick={() => onOpenMap(searchDraft)} title={t("Show these results on the map")}>{t("Map")}</button>
+              <button type="button" className="is-active" aria-current="page">{t("Table")}</button>
             </div>
-            <button className="home-search-submit" type="button" onClick={() => onOpenSearch(searchDraft)} title="Search">
+            <button className="home-search-submit" type="button" onClick={() => onOpenSearch(searchDraft)} title={t("Search")}>
               <Search size={18} />
             </button>
           </div>
         </div>
 
-        <nav className="graph-primary-nav" aria-label="Download page navigation">
+        <nav className="graph-primary-nav" aria-label={t("Download page navigation")}>
           <button type="button" onClick={() => onOpenSearch('')}>
-            Data Browser
+            {t("Data Browser")}
           </button>
           <button type="button" onClick={onOpenBlast}>
             BLAST
           </button>
           <button type="button" onClick={() => setStructureOpen(true)}>
-            Structure search
+            {t("Structure search")}
           </button>
           <span className="graph-user-chip">NJU - China 2026</span>
         </nav>
@@ -447,23 +449,23 @@ export function DownloadsPage({
                 <span className="live-line" />
                 {activeTab === 'enzymes' ? 'Enzyme export' : 'Pathway export'}
               </div>
-              <h2>Export setup</h2>
+              <h2>{t("Export setup")}</h2>
             </div>
             <button
               className="downloads-clear-button"
               onClick={clearQueue}
               disabled={downloadedItems.length === 0}
-              title="Empty the whole queue, both kinds"
+              title={t("Empty the whole queue, both kinds")}
             >
               <X size={13} />
-              Clear queue
+              {t("Clear queue")}
             </button>
           </div>
 
           <p className="downloads-export-note">{TAB_EXPORT_NOTE[activeTab]}</p>
 
           <div className="downloads-option-group">
-            <div className="downloads-option-label">Format</div>
+            <div className="downloads-option-label">{t("Format")}</div>
             <div className="downloads-format-list">
               {tabFormats.map((option) => (
                 <button
@@ -489,7 +491,7 @@ export function DownloadsPage({
 
           <div className="downloads-option-group">
             <div className="downloads-option-label">
-              Columns
+              {t("Columns")}
               <span className="downloads-column-count">
                 {activeFields.length}/{totalFields || '—'}
               </span>
@@ -499,7 +501,7 @@ export function DownloadsPage({
                 type="button"
                 onClick={() => setPick(isFasta ? [...FASTA_HEADER_FIELDS] : catalog?.defaultFields ?? [])}
               >
-                Defaults
+                {t("Defaults")}
               </button>
               <button
                 type="button"
@@ -511,16 +513,16 @@ export function DownloadsPage({
                   )
                 }
               >
-                All
+                {t("All")}
               </button>
               <button type="button" onClick={() => setPick([])}>
-                None
+                {t("None")}
               </button>
             </div>
             {catalogError ? (
               <p className="downloads-format-note is-error">Could not load the column list: {catalogError}</p>
             ) : !catalog ? (
-              <p className="downloads-format-note">Loading columns…</p>
+              <p className="downloads-format-note">{t("Loading columns…")}</p>
             ) : (
               <div className="downloads-columns-list">
                 {pickerGroups.map((group) => {
@@ -589,7 +591,7 @@ export function DownloadsPage({
                     — which is what a format like FASTA does. */}
                 {headerDiffers && (
                   <details className="downloads-preview-columns" open>
-                    <summary>Adds columns of its own</summary>
+                    <summary>{t("Adds columns of its own")}</summary>
                     <div className="downloads-preview-chip-list">
                       {preview.columns.map((column) => (
                         <span key={column} className="downloads-preview-chip">
@@ -671,9 +673,9 @@ export function DownloadsPage({
 
           <div className="downloads-panel-group">
             <div className="download-table-header" aria-hidden="true">
-              <span>Record</span>
-              <span>Category</span>
-              <span>Actions</span>
+              <span>{t("Record")}</span>
+              <span>{t("Category")}</span>
+              <span>{t("Actions")}</span>
             </div>
             {activeTab === 'enzymes' ? (
               enzymeItems.length > 0 ? (
@@ -703,12 +705,12 @@ export function DownloadsPage({
                       </button>
                       <button
                         className="icon-button"
-                        title="Open enzyme page"
+                        title={t("Open enzyme page")}
                         onClick={() => onOpenEntity(entity)}
                       >
                         <ArrowUpRight size={15} />
                       </button>
-                      <button className="icon-button" title="Remove from queue" onClick={() => removeFromQueue(entity.id)}>
+                      <button className="icon-button" title={t("Remove from queue")} onClick={() => removeFromQueue(entity.id)}>
                         <X size={15} />
                       </button>
                     </article>
@@ -716,7 +718,7 @@ export function DownloadsPage({
                 })
               ) : (
                 <div className="empty-home">
-                  <p>No enzyme records yet.</p>
+                  <p>{t("No enzyme records yet.")}</p>
                 </div>
               )
             ) : pathwayItems.length > 0 ? (
@@ -736,7 +738,7 @@ export function DownloadsPage({
                     <span className="downloads-pw-group-count">{group.routes.length}</span>
                     <button
                       className="icon-button"
-                      title="Remove every route in this group"
+                      title={t("Remove every route in this group")}
                       onClick={() => group.routes.forEach((route) => removeFromQueue(route.id))}
                     >
                       <X size={15} />
@@ -768,18 +770,18 @@ export function DownloadsPage({
                             {meta.stepCount} step{meta.stepCount === 1 ? '' : 's'} · {meta.compoundIds.length} compound
                             {meta.compoundIds.length === 1 ? '' : 's'}
                             {hasEnzymes ? (
-                              <span className="downloads-pw-route-badge" title="A specific enzyme is picked for every step">
-                                Enzymes picked
+                              <span className="downloads-pw-route-badge" title={t("A specific enzyme is picked for every step")}>
+                                {t("Enzymes picked")}
                               </span>
                             ) : (
                               <span className="downloads-pw-route-badge is-auto" title="No per-step picks; the export uses every enzyme in the database that can catalyse that step">
-                                Auto
+                                {t("Auto")}
                               </span>
                             )}
                           </span>
                           <button
                             className="icon-button"
-                            title="Remove this route from the queue"
+                            title={t("Remove this route from the queue")}
                             onClick={() => removeFromQueue(route.id)}
                           >
                             <X size={15} />

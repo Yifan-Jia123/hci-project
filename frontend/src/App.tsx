@@ -16,6 +16,8 @@ import { loadApiDataset } from './api'
 import type { BlastPayload, BlastSession } from './api'
 import { EnzymeDetailView } from './graphExperience'
 import { BlastDrawer } from './components/BlastDrawer'
+import { LanguageToggle } from './components/LanguageToggle'
+import { useT } from './lib/i18n'
 import { DownloadsPage } from './pages/DownloadsPage'
 import { HomePage } from './pages/HomePage'
 import { SearchResultsPage } from './pages/SearchResultsPage'
@@ -41,6 +43,7 @@ const navigation = [
 ] as const
 
 function App() {
+  const t = useT()
   const { route, navigate, goBack } = useAppRoute()
   const view = route.view
   const [cachedQuery, setQuery] = useCachedState('query', '', isString)
@@ -400,71 +403,71 @@ function App() {
             <div className="brand-name">Terpene Atlas</div>
             <div className="brand-subtitle">NJU-CHINA 2026</div>
           </div>
-          <button className="icon-button sidebar-close" onClick={() => setSidebarOpen(false)} title="Close navigation">
+          <button className="icon-button sidebar-close" onClick={() => setSidebarOpen(false)} title={t('Close navigation')}>
             <X size={17} />
           </button>
         </div>
 
-        <div className="sidebar-section-label">Workspace</div>
+        <div className="sidebar-section-label">{t('Workspace')}</div>
         <nav className="primary-nav">
           {navigation.map(({ view: itemView, label, icon: Icon }) => (
             <button key={itemView} className={`nav-item ${currentView === itemView ? 'active' : ''}`} onClick={() => goTo(itemView)}>
               <Icon size={18} />
-              <span>{label}</span>
+              <span>{t(label)}</span>
               {itemView === 'downloads' && queueCount > 0 && <span className="nav-count accent">{queueCount}</span>}
             </button>
           ))}
         </nav>
 
-        <div className="sidebar-section-label sidebar-data-label">Dataset</div>
+        <div className="sidebar-section-label sidebar-data-label">{t('Dataset')}</div>
         <div className="dataset-card">
           <div className="dataset-icon">
             <Database size={16} />
           </div>
           <div className="dataset-copy">
-            <strong>Curated terpene reference set</strong>
-            <span>{entities.length} records · {routeCount} routes</span>
+            <strong>{t('Curated terpene reference set')}</strong>
+            <span>{entities.length} {t('records')} · {routeCount} {t('routes')}</span>
           </div>
-          <span className="status-dot" title="Dataset ready" />
+          <span className="status-dot" title={t('Dataset ready')} />
         </div>
         <div className="dataset-meta">
-          <span>Last sync</span>
+          <span>{t('Last sync')}</span>
           <strong>2026.07.22</strong>
         </div>
 
         <div className="sidebar-footer">
           <button className="footer-link">
             <CircleHelp size={16} />
-            Data dictionary
+            {t('Data dictionary')}
           </button>
           <button className="footer-link">
             <Settings2 size={16} />
-            Workspace settings
+            {t('Workspace settings')}
           </button>
           <div className="version-chip">
-            {entities.length} entries · {graphNodes.length} nodes
+            {entities.length} {t('entries')} · {graphNodes.length} {t('nodes')}
           </div>
         </div>
       </aside>}
 
       <main className="main-area">
         {view !== 'home' && view !== 'search' && view !== 'enzyme' && view !== 'downloads' && <header className="topbar">
-          <button className="icon-button mobile-menu" onClick={() => setSidebarOpen(true)} title="Open navigation">
+          <button className="icon-button mobile-menu" onClick={() => setSidebarOpen(true)} title={t('Open navigation')}>
             <Menu size={20} />
           </button>
           <div className="crumbs">
             <span>Terpene Atlas</span>
             <ChevronRight size={14} />
-            <strong>{viewLabel(view)}</strong>
+            <strong>{t(viewLabel(view))}</strong>
           </div>
           <div className="topbar-actions">
             <div className="sync-state">
               <span className="status-dot" />
-              Live dataset
+              {t('Live dataset')}
             </div>
             <button className="topbar-download" onClick={() => goTo('downloads')}>
               <Download size={16} />
-              {queueCount > 0 ? `${queueCount} queued` : 'Queue empty'}
+              {queueCount > 0 ? `${queueCount} ${t('queued')}` : t('Queue empty')}
             </button>
           </div>
         </header>}
@@ -577,11 +580,13 @@ function App() {
         // BLAST 算搜索，所以搜索集对它**真的**生效（后端按搜索集另建序列库）。
         searchSet={searchSet}
       />
+
+      <LanguageToggle />
     </div>
   )
 }
 
-function viewLabel(view: View) {
+function viewLabel(view: View): string {
   switch (view) {
     case 'home':
       return 'Overview'
@@ -592,6 +597,8 @@ function viewLabel(view: View) {
       return 'Download queue'
     case 'enzyme':
       return 'Enzyme detail'
+    default:
+      return 'Overview'
   }
 }
 

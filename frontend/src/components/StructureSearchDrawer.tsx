@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState, type RefObject } from 'react'
 import { createPortal } from 'react-dom'
 import { Beaker, CornerDownLeft, ExternalLink, FlaskConical, Loader2, Search, Sparkles, Trash2, X } from 'lucide-react'
 import { searchStructureByInchikey, type StructureSearchCompoundHit } from '../api'
+import { useT } from '../lib/i18n'
 
 type KetcherApi = {
   getSmiles: () => Promise<string> | string
@@ -28,6 +29,7 @@ export function StructureSearchDrawer({
   /** Quick-transfer: drop a matched compound's ChEBI into the page's search box (no search is run). */
   onTransferChebi?: (chebiId: string) => void
 }) {
+  const t = useT()
   const iframeRef = useRef<HTMLIFrameElement | null>(null)
   const [editorReady, setEditorReady] = useState(false)
   const [status, setStatus] = useState('Loading Ketcher editor...')
@@ -134,18 +136,18 @@ export function StructureSearchDrawer({
   return createPortal(
     <div className={`structure-drawer-layer ${open ? 'is-open' : ''}`} aria-hidden={!open}>
       <div className="structure-drawer-backdrop" onClick={onClose} />
-      <aside className="structure-drawer" role="dialog" aria-modal="true" aria-label="Structure search — compound dictionary">
+      <aside className="structure-drawer" role="dialog" aria-modal="true" aria-label={t("Structure search — compound dictionary")}>
         <div className="structure-drawer-head">
           <div className="structure-drawer-title">
             <span className="structure-drawer-icon">
               <FlaskConical size={16} />
             </span>
             <div>
-              <div className="structure-drawer-kicker">Structure search · compound dictionary</div>
-              <h2>Draw a molecule, find the compound</h2>
+              <div className="structure-drawer-kicker">{t("Structure search · compound dictionary")}</div>
+              <h2>{t("Draw a molecule, find the compound")}</h2>
             </div>
           </div>
-          <button className="structure-drawer-close" type="button" onClick={onClose} title="Close">
+          <button className="structure-drawer-close" type="button" onClick={onClose} title={t("Close")}>
             <X size={18} />
           </button>
         </div>
@@ -154,17 +156,17 @@ export function StructureSearchDrawer({
           <div className={`structure-drawer-status ${error ? 'is-error' : ''}`}>{status}</div>
 
           <div className="structure-editor-block">
-            <iframe ref={iframeRef} title="Ketcher structure editor" src="/ketcher_standalone/index.html" />
+            <iframe ref={iframeRef} title={t("Ketcher structure editor")} src="/ketcher_standalone/index.html" />
           </div>
 
           <div className="structure-drawer-actions">
             <button type="button" className="structure-drawer-btn ghost" onClick={() => void loadExample()}>
               <Sparkles size={15} />
-              Load example
+              {t("Load example")}
             </button>
             <button type="button" className="structure-drawer-btn ghost" onClick={() => void clearCanvas()}>
               <Trash2 size={15} />
-              Clear
+              {t("Clear")}
             </button>
             <button
               type="button"
@@ -173,7 +175,7 @@ export function StructureSearchDrawer({
               disabled={loading || !editorReady}
             >
               {loading ? <Loader2 size={15} className="spin" /> : <Search size={15} />}
-              Search database
+              {t("Search database")}
             </button>
           </div>
 
@@ -192,7 +194,7 @@ export function StructureSearchDrawer({
 
           <div className="structure-drawer-section">
             <div className="structure-drawer-section-head">
-              <h3>Matched compounds</h3>
+              <h3>{t("Matched compounds")}</h3>
               <span>{compounds?.length ?? 0}</span>
             </div>
             {compounds && compounds.length > 0 ? (
@@ -227,7 +229,7 @@ export function StructureSearchDrawer({
                         </button>
                       )}
                       {compound.chebiUrl ? (
-                        <a className="structure-drawer-hit-link" href={compound.chebiUrl} target="_blank" rel="noreferrer" title="Open in ChEBI">
+                        <a className="structure-drawer-hit-link" href={compound.chebiUrl} target="_blank" rel="noreferrer" title={t("Open in ChEBI")}>
                           <ExternalLink size={15} />
                         </a>
                       ) : null}

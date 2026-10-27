@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Layers } from 'lucide-react'
 import { loadMetadataFilters } from '../api'
 import { sourceLabel } from '../lib/sourceLabels'
+import { useT } from '../lib/i18n'
 
 /**
  * 搜索集（search set）：**检索之前**圈定数据来源。
@@ -44,6 +45,7 @@ export function SearchSetControl({
   value: string[]
   onChange: (next: string[]) => void
 }) {
+  const t = useT()
   const [options, setOptions] = useState<SearchSetOption[]>([])
   const detailsRef = useRef<HTMLDetailsElement | null>(null)
 
@@ -59,13 +61,13 @@ export function SearchSetControl({
 
   const total = options.reduce((sum, option) => sum + option.count, 0)
   const current = value[0]
-  const currentLabel = current ? sourceLabel(current) : 'All sources'
+  const currentLabel = current ? sourceLabel(current) : t('All sources')
   const currentCount = current ? options.find((option) => option.value === current)?.count : total
 
   // 只列**真的有行**的来源（见后端 `searchSets` 的说明）：选中一个 0 行的集合
   // 就是一次空检索，而用户看不出那是自己选的。
   const choices: Array<{ key: string; label: string; count?: number; next: string[] }> = [
-    { key: '', label: 'All sources', count: total || undefined, next: [] },
+    { key: '', label: t('All sources'), count: total || undefined, next: [] },
     ...options.map((option) => ({
       key: option.value,
       label: sourceLabel(option.value),
@@ -90,7 +92,7 @@ export function SearchSetControl({
         }
       >
         <Layers size={13} />
-        <span>Search set</span>
+        <span>{t("Search set")}</span>
         <small className="search-set-current">
           {currentLabel}
           {currentCount ? ` (${currentCount.toLocaleString()})` : ''}
@@ -98,8 +100,8 @@ export function SearchSetControl({
       </summary>
 
       <div className="search-table-filter-popover search-set-popover">
-        <p className="search-set-title">Search set</p>
-        <p className="search-set-hint">Limits where every search looks. Downloads are not affected.</p>
+        <p className="search-set-title">{t("Search set")}</p>
+        <p className="search-set-hint">{t("Limits where every search looks. Downloads are not affected.")}</p>
         <div className="search-set-row">
           {choices.map((choice) => {
             const active = choice.key === (current ?? '')

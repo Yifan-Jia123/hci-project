@@ -6,6 +6,7 @@ import { sourceLabel } from '../lib/sourceLabels'
 import type { BlastHit, BlastPayload } from '../api'
 import type { Entity } from '../types'
 import '../styles/blast.css'
+import { useT } from '../lib/i18n'
 
 /**
  * Slide-out BLAST drawer (mirrors the Structure-search drawer).
@@ -93,6 +94,7 @@ export function BlastDrawer({
   /** 搜索集。BLAST 算搜索，所以它对 BLAST **真的**生效（后端按搜索集另建序列库）。 */
   searchSet: string[]
 }) {
+  const t = useT()
   const [draft, setDraft] = useState('')
   const [threshold, setThreshold] = useState(1e-5)
   const [running, setRunning] = useState(false)
@@ -182,18 +184,18 @@ export function BlastDrawer({
   return createPortal(
     <div className={`blast-drawer-layer ${open ? 'is-open' : ''}`} aria-hidden={!open}>
       <div className="blast-drawer-backdrop" onClick={onClose} />
-      <aside className="blast-drawer" role="dialog" aria-modal="true" aria-label="Sequence search (BLASTp)">
+      <aside className="blast-drawer" role="dialog" aria-modal="true" aria-label={t("Sequence search (BLASTp)")}>
         <div className="blast-drawer-head">
           <div className="blast-drawer-title">
             <span className="blast-drawer-icon">
               <ScanSearch size={17} />
             </span>
             <div>
-              <div className="blast-drawer-kicker">Sequence search · BLASTp</div>
-              <h2>Find homologous enzymes</h2>
+              <div className="blast-drawer-kicker">{t("Sequence search · BLASTp")}</div>
+              <h2>{t("Find homologous enzymes")}</h2>
             </div>
           </div>
-          <button className="blast-drawer-close" type="button" onClick={onClose} title="Close">
+          <button className="blast-drawer-close" type="button" onClick={onClose} title={t("Close")}>
             <X size={18} />
           </button>
         </div>
@@ -201,12 +203,12 @@ export function BlastDrawer({
         <div className="blast-query-card">
           <div className="blast-query-head">
             <div className="blast-query-title">
-              <strong>Paste a protein sequence</strong>
+              <strong>{t("Paste a protein sequence")}</strong>
               <small>FASTA header optional · at least {MIN_AA} amino acids</small>
             </div>
             {/* 搜索集变 → 这个数跟着变（后端与建库共用谓词，见 loadBlastSubjects）。
                 问不到时显示 "…"：宁可不说，也不说一个不属于当前搜索集的数。 */}
-            <span className="blast-pool-chip" title="Sequences BLAST will search in the current search set">
+            <span className="blast-pool-chip" title={t("Sequences BLAST will search in the current search set")}>
               {subjectCount === null ? '…' : `${subjectCount.toLocaleString()} subjects`}
             </span>
           </div>
@@ -220,13 +222,13 @@ export function BlastDrawer({
               if (event.key === 'Enter' && (event.metaKey || event.ctrlKey)) void runSearch()
             }}
             placeholder={'e.g.\n\n>putative terpene synthase\nMS… (paste the whole protein)'}
-            aria-label="Protein sequence to search"
+            aria-label={t("Protein sequence to search")}
             spellCheck={false}
           />
 
           <div className="blast-query-actions">
-            <div className="blast-threshold" role="group" aria-label="E-value threshold">
-              <span className="blast-threshold-label">E-value ≤</span>
+            <div className="blast-threshold" role="group" aria-label={t("E-value threshold")}>
+              <span className="blast-threshold-label">{t("E-value ≤")}</span>
               {THRESHOLDS.map((option) => (
                 <button
                   key={option.value}
@@ -240,14 +242,14 @@ export function BlastDrawer({
             </div>
             <div className="blast-query-buttons">
               {draft.trim() && (
-                <button type="button" className="blast-clear" onClick={() => { setDraft(''); setPayload(null); setError(null) }} title="Clear query">
+                <button type="button" className="blast-clear" onClick={() => { setDraft(''); setPayload(null); setError(null) }} title={t("Clear query")}>
                   <X size={13} />
-                  Clear
+                  {t("Clear")}
                 </button>
               )}
-              <button type="button" className="blast-example" onClick={() => void loadExample()} title="Fill the box with a library enzyme sequence">
+              <button type="button" className="blast-example" onClick={() => void loadExample()} title={t("Fill the box with a library enzyme sequence")}>
                 <FlaskConical size={14} />
-                Example
+                {t("Example")}
               </button>
               <button type="button" className="blast-run" onClick={() => void runSearch()} disabled={running || !draft.trim()}>
                 {running ? <Loader2 size={15} className="spin" /> : <ScanSearch size={15} />}
@@ -278,7 +280,7 @@ export function BlastDrawer({
           {!running && payload && hitCount === 0 && (
             <div className="blast-empty-panel">
               <ScanSearch size={22} />
-              <h3>No significant hits</h3>
+              <h3>{t("No significant hits")}</h3>
               <p>Nothing matched above the E-value threshold (≤ {thresholdLabel(threshold)}). Try a looser threshold or a longer sequence.</p>
             </div>
           )}
@@ -298,13 +300,13 @@ export function BlastDrawer({
               {searchSet.length > 0 && (
                 <p className="blast-scope-note" role="note">
                   Searched inside the <strong>{searchSet.map(sourceLabel).join(', ')}</strong> search set only —
-                  E-values look stronger on a smaller database. Switch the search set to <em>All sources</em> to compare.
+                  E-values look stronger on a smaller database. Switch the search set to <em>{t("All sources")}</em> to compare.
                 </p>
               )}
 
               <div className="blast-view-bar">
                 <div className="blast-view-copy">
-                  <strong>Review in the library results</strong>
+                  <strong>{t("Review in the library results")}</strong>
                   <span>Shown with the same table / map views as a keyword search — the filters work there too.</span>
                 </div>
                 <div className="blast-view-actions">
@@ -340,8 +342,8 @@ export function BlastDrawer({
                             <ExternalLink size={11} />
                           </a>
                         ) : (
-                          <span className="blast-hit-uniprot is-missing" title="No UniProt entry in the library">
-                            <span className="blast-hit-uniprot-key">Library</span>
+                          <span className="blast-hit-uniprot is-missing" title={t("No UniProt entry in the library")}>
+                            <span className="blast-hit-uniprot-key">{t("Library")}</span>
                             <strong>{card?.databaseCode || hit.enzymeId}</strong>
                           </span>
                         )}
@@ -351,11 +353,11 @@ export function BlastDrawer({
                         {[card?.organismName].filter(Boolean).join(' · ') || hit.enzymeId}
                       </p>
                       <div className="blast-hit-stats">
-                        <span title="Percent identity"><strong>{hit.identity.toFixed(1)}%</strong> identity</span>
-                        <span title="Query coverage"><strong>{hit.queryCover.toFixed(0)}%</strong> query cover</span>
-                        <span title="Alignment length"><strong>{hit.alignmentLength}</strong> aligned aa</span>
-                        <span title="E-value"><strong>{hit.eValue.toExponential(2)}</strong> E-value</span>
-                        <span title="Bit score"><strong>{hit.bitscore.toFixed(1)}</strong> bitscore</span>
+                        <span title={t("Percent identity")}><strong>{hit.identity.toFixed(1)}%</strong> identity</span>
+                        <span title={t("Query coverage")}><strong>{hit.queryCover.toFixed(0)}%</strong> query cover</span>
+                        <span title={t("Alignment length")}><strong>{hit.alignmentLength}</strong> aligned aa</span>
+                        <span title={t("E-value")}><strong>{hit.eValue.toExponential(2)}</strong> E-value</span>
+                        <span title={t("Bit score")}><strong>{hit.bitscore.toFixed(1)}</strong> bitscore</span>
                       </div>
                       <div className="blast-hit-actions">
                         {card?.sourceType && (
@@ -382,9 +384,9 @@ export function BlastDrawer({
 
           {!running && !payload && !error && (
             <div className="blast-drawer-idle">
-              <h3>Sequence search against the enzyme library</h3>
+              <h3>{t("Sequence search against the enzyme library")}</h3>
               <p>
-                Paste a protein and hit <strong>Run BLAST</strong>. The local NCBI BLASTp aligns it against{' '}
+                Paste a protein and hit <strong>{t("Run BLAST")}</strong>. The local NCBI BLASTp aligns it against{' '}
                 <strong>
                   {subjectCount === null
                     ? 'the enzyme sequences'
@@ -394,7 +396,7 @@ export function BlastDrawer({
               </p>
               <button type="button" className="blast-example-inline" onClick={() => void loadExample()}>
                 <FlaskConical size={14} />
-                Try a library sequence
+                {t("Try a library sequence")}
               </button>
             </div>
           )}
@@ -408,9 +410,9 @@ export function BlastDrawer({
                 : 'Download list is empty'
               : 'No enzymes selected yet'}
           </span>
-          <button className="blast-drawer-download" type="button" onClick={onOpenDownloads} title="Open download list">
+          <button className="blast-drawer-download" type="button" onClick={onOpenDownloads} title={t("Open download list")}>
             <Download size={14} />
-            <span>Downloading table</span>
+            <span>{t("Downloading table")}</span>
             {queueCount > 0 && <span className="download-list-badge">{queueCount}</span>}
           </button>
         </div>
