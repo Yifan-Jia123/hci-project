@@ -12,6 +12,8 @@ class Settings(BaseSettings):
     # BLAST subject 库工作目录(fasta + makeblastdb 产物 + 签名缓存)。
     # 若最终路径含非 ASCII 字符(BLAST+ 的 LMDB 库无法写入),blast_service 会自动改用系统临时目录。
     blast_work_dir: str = "blast_work"
+    assistant_api_key: str = ""
+    assistant_model: str = "gpt-4.1-mini"
 
     @property
     def db_url(self) -> str:

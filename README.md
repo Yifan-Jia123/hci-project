@@ -472,10 +472,13 @@ igem_database/
 
 ## API 接口
 
+页面右下角的数据库助手可结合当前酶详情和实时检索结果回答问题，回答附带可跳转的酶、化合物条目。默认仅使用数据库记录；若需模型生成自然语言解释，可在后端配置 `IGEM_ASSISTANT_API_KEY` 和可选的 `IGEM_ASSISTANT_MODEL`。密钥仅保存在后端环境中。助手只把已检索到的记录字段交给模型，未查到的内容不作为事实回答。
+
 基础路径 `/api/v1`。完整文档：**http://localhost:8000/docs**
 
 | 方法 | 路径 | 说明 |
 |---|---|---|
+| POST | `/assistant/ask` | 数据库助手：结合当前酶、检索结果或起终点通路，返回答案和可跳转引用 |
 | GET | `/metadata/filter-options` | 筛选项（`?module=graph\|table` 决定物种取值域） |
 | GET | `/graph` | 网络图数据（`selection_mode=global` 或按酶） |
 | POST | `/graph/map-scope` | 检索词 → 图范围 |

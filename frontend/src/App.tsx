@@ -18,6 +18,7 @@ import { EnzymeDetailView } from './graphExperience'
 import { BlastDrawer } from './components/BlastDrawer'
 import { GlobalNav } from './components/GlobalNav'
 import { StructureSearchDrawer } from './components/StructureSearchDrawer'
+import { DatabaseAssistant } from './components/DatabaseAssistant'
 import { useT } from './lib/i18n'
 import { DownloadsPage } from './pages/DownloadsPage'
 import { HomePage } from './pages/HomePage'
@@ -600,6 +601,14 @@ function App() {
 
       {/* 结构检索抽屉：原来四个页面各开一份，现在全局一份。 */}
       <StructureSearchDrawer open={structureOpen} onClose={() => setStructureOpen(false)} />
+      <DatabaseAssistant
+        enzymeId={view === 'enzyme' ? selectedId ?? undefined : undefined}
+        searchSet={searchSet}
+        onOpenEnzyme={(id) => goTo('enzyme', id)}
+        onOpenCompound={(id) => openMapSearch(id)}
+        onSearch={openLibrarySearch}
+        onOpenPathway={(start, end) => runMapSearch({ mode: 'pathway', query: '', start, end, via: [] })}
+      />
     </div>
   )
 }

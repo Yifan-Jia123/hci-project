@@ -563,6 +563,7 @@ export function CompoundGraphHome({
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
+  const [failedStructureIds, setFailedStructureIds] = useState<Set<string>>(new Set())
   const [positions, setPositions] = useState<Record<string, Point>>({})
   const [camera, setCamera] = useState<Point>({ x: 0, y: 0 })
   const [zoomScale, setZoomScale] = useState(1)
@@ -2951,7 +2952,9 @@ export function CompoundGraphHome({
             </div>
             <div className="popover-id">ChEBI ID : {selectedNode.chebiId || selectedNode.compoundId}</div>
             <div className="compound-structure">
-              {compoundImageUrl(selectedNode) ? <img src={compoundImageUrl(selectedNode) || undefined} alt={`${selectedNode.name} structure`} /> : <div className="structure-unavailable">{t("No structure")}</div>}
+              {compoundImageUrl(selectedNode) && !failedStructureIds.has(selectedNode.compoundId)
+                ? <img src={compoundImageUrl(selectedNode) || undefined} alt={`${selectedNode.name} structure`} onError={() => setFailedStructureIds((current) => new Set(current).add(selectedNode.compoundId))} />
+                : <div className="structure-unavailable">{t("No structure")}</div>}
             </div>
             <div className="popover-fields">
               <p><span>{t("ID :")}</span><strong>{selectedNode.compoundId}</strong></p>

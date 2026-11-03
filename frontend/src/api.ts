@@ -893,6 +893,28 @@ export async function loadEnzymeDetail(enzymeId: string): Promise<EnzymeDetailDa
   return request<EnzymeDetailData>(`/enzymes/${encodeURIComponent(enzymeId)}`)
 }
 
+export type AssistantReply = {
+  answer: string
+  mode: 'ai' | 'database'
+  references: Array<{ kind: 'enzyme' | 'compound'; id: string; label: string }>
+  searchQuery: string
+  enzymeTotal: number
+  pathway?: { start: string; end: string } | null
+}
+
+export async function askDatabaseAssistant(body: {
+  question: string
+  enzymeId?: string
+  sourceTypes: string[]
+  language: 'zh' | 'en'
+}): Promise<AssistantReply> {
+  return request<AssistantReply>('/assistant/ask', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  })
+}
+
 /** 展开一个边组的全部酶。`sourceTypes` = 搜索集 —— 图上圈定了，展开时也必须圈定，
  *  否则展开会把不属于搜索集的边又漏回来（服务端见 `expand_edge_group`）。 */
 export async function loadExpandedEdgeGroup(edgeGroupId: string, sourceTypes?: string[]): Promise<HomeGraphEdge[]> {

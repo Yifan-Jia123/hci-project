@@ -1,7 +1,14 @@
 import time
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from fastapi.responses import Response
 import httpx
+from rdkit import Chem
+from rdkit.Chem import Draw
+from sqlalchemy import or_, select
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.deps import get_db
+from app.models.compound import Compound
 
 router = APIRouter()
 
@@ -64,13 +71,32 @@ async def get_atom_map(rhea_id: str):
 
 
 @router.get("/assets/compounds/{chebi_id}/structure.svg")
-async def get_compound_structure(chebi_id: str):
+async def get_compound_structure(chebi_id: str, db: AsyncSession = Depends(get_db)):
     number = chebi_id.split(":")[-1] if ":" in chebi_id else chebi_id
 
     now = time.time()
     cached = _chebi_cache.get(number)
     if cached and cached[1] > now:
         return Response(content=cached[0], media_type=cached[2])
+
+    result = await db.execute(
+        select(Compound.smiles, Compound.inchi).where(
+            or_(Compound.compound_id == chebi_id, Compound.chebi_id == chebi_id)
+        ).limit(1)
+    )
+    structure = result.first()
+    if structure:
+        molecule = Chem.MolFromSmiles(structure.smiles) if structure.smiles else None
+        if molecule is None and structure.inchi:
+            molecule = Chem.MolFromInchi(structure.inchi)
+        if molecule is not None and molecule.GetNumAtoms() > 0:
+            drawer = Draw.MolDraw2DSVG(360, 280)
+            drawer.DrawMolecule(molecule)
+            drawer.FinishDrawing()
+            image_bytes = drawer.GetDrawingText().encode("utf-8")
+            _chebi_cache[number] = (image_bytes, now + CACHE_TTL, "image/svg+xml")
+            return Response(content=image_bytes, media_type="image/svg+xml")
+        return Response(content="", status_code=404)
 
     try:
         async with httpx.AsyncClient(timeout=REQUEST_TIMEOUT, follow_redirects=True) as client:

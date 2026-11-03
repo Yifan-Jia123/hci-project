@@ -1,0 +1,206 @@
+.database-assistant {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 70;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+.database-assistant-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 16px;
+  border: 1px solid #d9c985;
+  border-radius: 999px;
+  background: #0b2148;
+  color: #f7f1d5;
+  box-shadow: 0 10px 30px rgba(8, 26, 58, 0.3);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.database-assistant-panel {
+  width: min(390px, calc(100vw - 32px));
+  height: min(590px, calc(100vh - 96px));
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+  overflow: hidden;
+  border: 1px solid #c7d5e0;
+  border-radius: 16px;
+  background: #f8fbfd;
+  color: #182740;
+  box-shadow: 0 20px 60px rgba(8, 26, 58, 0.32);
+}
+
+.database-assistant-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 16px;
+  background: #0b2148;
+  color: #fff;
+}
+
+.database-assistant-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 750;
+}
+
+.database-assistant-header button {
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: inherit;
+}
+
+.database-assistant-context {
+  padding: 9px 16px;
+  border-bottom: 1px solid #dce7ef;
+  color: #607086;
+  font-size: 12px;
+}
+
+.database-assistant-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.database-assistant-welcome p,
+.database-assistant-answer p {
+  margin: 0 0 12px;
+}
+
+.database-assistant-examples,
+.database-assistant-references {
+  display: grid;
+  gap: 7px;
+}
+
+.database-assistant-examples button,
+.database-assistant-references button {
+  padding: 9px 10px;
+  border: 1px solid #d4e0e9;
+  border-radius: 9px;
+  background: #fff;
+  color: #16345d;
+  text-align: left;
+}
+
+.database-assistant-exchange + .database-assistant-exchange {
+  margin-top: 18px;
+}
+
+.database-assistant-question {
+  max-width: 88%;
+  width: fit-content;
+  margin: 0 0 10px auto;
+  padding: 9px 12px;
+  border-radius: 12px 12px 2px 12px;
+  background: #e9e1bd;
+  color: #182740;
+}
+
+.database-assistant-answer {
+  padding: 12px;
+  border: 1px solid #dce7ef;
+  border-radius: 12px 12px 12px 2px;
+  background: #fff;
+}
+
+.database-assistant-mode {
+  display: block;
+  margin-bottom: 7px;
+  color: #66788e;
+  font-size: 11px;
+}
+
+.database-assistant-references button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.database-assistant-references small {
+  display: block;
+  color: #66788e;
+}
+
+.database-assistant-search {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #155b91;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.database-assistant-loading,
+.database-assistant-error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #607086;
+}
+
+.database-assistant-error {
+  display: block;
+  color: #ae392e;
+}
+
+.database-assistant-error small {
+  display: block;
+}
+
+.database-assistant-form {
+  display: flex;
+  gap: 8px;
+  align-items: end;
+  padding: 12px;
+  border-top: 1px solid #dce7ef;
+  background: #fff;
+}
+
+.database-assistant-form textarea {
+  flex: 1;
+  min-width: 0;
+  resize: none;
+  padding: 9px;
+  border: 1px solid #c7d5e0;
+  border-radius: 9px;
+  color: #182740;
+  background: #fff;
+  font: inherit;
+  font-size: 13px;
+}
+
+.database-assistant-form button {
+  display: grid;
+  place-items: center;
+  width: 35px;
+  height: 35px;
+  border: 0;
+  border-radius: 9px;
+  background: #0b2148;
+  color: #fff;
+}
+
+@media (max-width: 760px) {
+  .database-assistant {
+    right: 12px;
+    bottom: 12px;
+  }
+}

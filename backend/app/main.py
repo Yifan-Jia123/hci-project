@@ -13,6 +13,7 @@ from app.routers import (
     blast,
     download,
     assets,
+    assistant,
 )
 
 app = FastAPI(
@@ -42,6 +43,7 @@ app.include_router(bundle.router, prefix=API_PREFIX, tags=["Bundle"])
 app.include_router(blast.router, prefix=API_PREFIX, tags=["Blast"])
 app.include_router(download.router, prefix=API_PREFIX, tags=["Download"])
 app.include_router(assets.router, prefix=API_PREFIX, tags=["Assets"])
+app.include_router(assistant.router, prefix=API_PREFIX, tags=["Assistant"])
 
 
 @app.get("/")

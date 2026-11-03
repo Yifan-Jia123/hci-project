@@ -9,6 +9,23 @@
   position: relative;
 }
 
+.app-shell:has(.enzyme-atlas-page) {
+  height: 100vh;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.app-shell:has(.enzyme-atlas-page) .main-area {
+  height: calc(100vh - var(--global-nav-h));
+  min-height: 0;
+}
+
+.app-shell:has(.enzyme-atlas-page) .enzyme-atlas-page {
+  height: 100%;
+  min-height: 0;
+  padding: 0;
+}
+
 .enzyme-atlas-stage {
   position: relative;
   isolation: isolate;
