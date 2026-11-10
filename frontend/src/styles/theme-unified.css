@@ -1,0 +1,58 @@
+:root {
+  --shadow: 0 8px 20px rgba(2, 8, 14, 0.16);
+  --ink-muted: #b4c5d2;
+}
+
+body { font-size: 16px; }
+
+.app-shell:not(.home-shell) {
+  --celestial-paper: rgba(255, 255, 255, 0.94);
+  --celestial-muted: #50647a;
+  background: #f2f7fa;
+}
+
+.app-shell:not(.home-shell)::before,
+.app-shell:not(.home-shell)::after { opacity: 0.18; }
+
+.app-shell:not(.home-shell) .page-heading,
+.app-shell:not(.home-shell) .section-panel,
+.app-shell:not(.home-shell) .network-panel,
+.app-shell:not(.home-shell) .detail-panel,
+.app-shell:not(.home-shell) .downloads-summary .summary-panel,
+.app-shell:not(.home-shell) .search-result,
+.app-shell:not(.home-shell) .download-row,
+.app-shell:not(.home-shell) .detail-card,
+.app-shell:not(.home-shell) .reference-row,
+.app-shell:not(.home-shell) .reaction-card,
+.app-shell:not(.home-shell) .detail-atlas-hero {
+  box-shadow: 0 5px 16px rgba(8, 26, 58, 0.07);
+}
+
+.search-table-stage { background: #f2f7fa; }
+.search-table-card { box-shadow: 0 4px 12px rgba(8, 26, 58, 0.06); }
+.search-table-card:hover { box-shadow: 0 6px 16px rgba(8, 26, 58, 0.1); }
+.search-table-card.selected { box-shadow: inset 4px 0 0 #a68a49, 0 5px 16px rgba(8, 26, 58, 0.08); }
+
+.search-table-topnav .download-list-button,
+.enzyme-topnav .download-list-button { display: none; }
+
+.graph-home-summary p,
+.graph-metric-pill span,
+.search-table-card-titles p,
+.search-table-filter-dropdown > summary small,
+.home-map-page .panel-kicker,
+.app-shell:not(.home-shell) small { font-size: 14px; }
+
+.graph-home-summary p,
+.home-map-page .graph-filter-sidebar,
+.home-map-page .home-map-stats,
+.search-table-page .search-table-filter,
+.search-table-page .search-table-main,
+.downloads-atlas-page .downloads-page { font-size: 16px; }
+
+@media (max-width: 760px) {
+  .global-nav-chevron { display: none; }
+  .global-nav-tab { padding: 0 8px; }
+  .global-nav-downloads span:not(.global-nav-downloads-badge) { display: none; }
+  .global-nav-downloads { padding: 0 9px; }
+}

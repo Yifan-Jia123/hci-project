@@ -17,7 +17,7 @@
   background: #0b2148;
   color: #f7f1d5;
   box-shadow: 0 10px 30px rgba(8, 26, 58, 0.3);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
 }
 
@@ -63,14 +63,14 @@
   padding: 9px 16px;
   border-bottom: 1px solid #dce7ef;
   color: #607086;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .database-assistant-messages {
   flex: 1;
   overflow-y: auto;
   padding: 16px;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.55;
 }
 
@@ -120,7 +120,7 @@
   display: block;
   margin-bottom: 7px;
   color: #66788e;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .database-assistant-references button {
@@ -144,7 +144,7 @@
   border: 0;
   background: transparent;
   color: #155b91;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -184,7 +184,7 @@
   color: #182740;
   background: #fff;
   font: inherit;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .database-assistant-form button {

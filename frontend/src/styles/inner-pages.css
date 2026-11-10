@@ -209,7 +209,7 @@
 }
 
 .app-shell:not(.home-shell) .page-heading h1 {
-  font-size: 28px;
+  font-size: 30px;
   margin: 8px 0 6px;
 }
 
@@ -260,7 +260,7 @@
 }
 
 .app-shell:not(.home-shell) .panel-header h2 {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 800;
 }
 
@@ -403,7 +403,7 @@
   border: 1px solid var(--celestial-line);
   background: rgba(238, 246, 250, 0.82);
   color: var(--celestial-ink);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 800;
 }
 
@@ -432,7 +432,7 @@
   border-radius: 6px 6px 0 0;
   background: #e8f1f6;
   color: var(--celestial-ink);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 800;
 }
 
@@ -479,7 +479,7 @@
 }
 
 .app-shell:not(.home-shell) .queue-copy strong {
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.35;
   white-space: normal;
   overflow: visible;
@@ -499,7 +499,7 @@
   border-radius: 999px;
   background: rgba(237, 227, 175, 0.72);
   color: #544913;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 800;
 }
 
@@ -577,7 +577,7 @@
 
 .app-shell:not(.home-shell) .structure-status {
   color: var(--celestial-muted);
-  font-size: 11px;
+  font-size: 13px;
   text-align: right;
   max-width: 220px;
 }
@@ -621,13 +621,13 @@
 
 .app-shell:not(.home-shell) .structure-field span {
   color: var(--celestial-muted);
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
 }
 
 .app-shell:not(.home-shell) .structure-field strong {
   color: var(--celestial-ink);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
   word-break: break-word;
 }
@@ -638,7 +638,7 @@
   border-radius: 8px;
   background: rgba(255, 241, 241, 0.95);
   color: #9d2e3a;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .app-shell:not(.home-shell) .structure-section {
@@ -656,12 +656,12 @@
 .app-shell:not(.home-shell) .structure-section-head h3 {
   margin: 0;
   color: var(--celestial-ink);
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .app-shell:not(.home-shell) .structure-section-head span {
   color: var(--celestial-muted);
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .app-shell:not(.home-shell) .structure-hit-list {
@@ -710,7 +710,7 @@
 
 .app-shell:not(.home-shell) .structure-hit-main strong {
   color: var(--celestial-ink);
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.4;
   word-break: break-word;
 }
@@ -718,7 +718,7 @@
 .app-shell:not(.home-shell) .structure-hit-main span,
 .app-shell:not(.home-shell) .structure-hit-main small {
   color: var(--celestial-muted);
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.4;
   word-break: break-word;
 }
@@ -734,7 +734,7 @@
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.84);
   color: var(--celestial-muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .spin-icon {
@@ -914,7 +914,7 @@
 }
 
 .app-shell:not(.home-shell) .downloads-pw-group-head .queue-copy strong {
-  font-size: 13px;
+  font-size: 15px;
   white-space: normal;
   overflow: visible;
   text-overflow: clip;
@@ -939,7 +939,7 @@
   border-radius: 999px;
   background: rgba(237, 227, 175, 0.92);
   color: var(--celestial-navy);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
 }
 
@@ -973,7 +973,7 @@
   border-radius: 999px;
   background: rgba(237, 227, 175, 0.92);
   color: var(--celestial-navy);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 800;
 }
 
@@ -983,7 +983,7 @@
   gap: 0;
   align-items: center;
   min-width: 0;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .app-shell:not(.home-shell) .downloads-pw-node {
@@ -1015,7 +1015,7 @@
 .app-shell:not(.home-shell) .downloads-pw-route-meta {
   justify-self: end;
   color: var(--celestial-muted);
-  font-size: 11px;
+  font-size: 13px;
   white-space: nowrap;
 }
 
@@ -1052,7 +1052,7 @@
   }
 
   .app-shell:not(.home-shell) .downloads-pw-node {
-    font-size: 11px;
+    font-size: 13px;
   }
 }
 
@@ -1073,7 +1073,7 @@
   background: rgba(237, 227, 175, 0.55);
   border: 1px solid rgba(173, 150, 60, 0.55);
   color: #6d5715;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.02em;
   vertical-align: 1px;
@@ -1103,7 +1103,7 @@
 .app-shell:not(.home-shell) .downloads-pw-enzyme-step-label {
   flex: 0 0 auto;
   color: var(--celestial-ink, #16233a);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
 }
 
@@ -1124,19 +1124,19 @@
   border-radius: 999px;
   background: #fbf4dd;
   color: var(--celestial-ink, #16233a);
-  font-size: 11px;
+  font-size: 13px;
   white-space: nowrap;
 }
 
 .app-shell:not(.home-shell) .downloads-pw-enzyme-chip em {
   color: var(--celestial-muted, #68758a);
   font-style: normal;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .app-shell:not(.home-shell) .downloads-pw-enzyme-missing {
   color: var(--celestial-muted, #68758a);
-  font-size: 11px;
+  font-size: 13px;
 }
 
 @media (max-width: 760px) {
@@ -1218,7 +1218,7 @@
   margin: 0;
   padding: 0 18px;
   color: rgba(255, 255, 255, 0.72);
-  font-size: 11.5px;
+  font-size: 13.5px;
   line-height: 1.5;
 }
 
@@ -1239,14 +1239,14 @@
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.05em;
 }
 
 .app-shell:not(.home-shell) .downloads-format-item small {
   color: rgba(255, 255, 255, 0.66);
-  font-size: 10.5px;
+  font-size: 12.5px;
   line-height: 1.35;
 }
 
@@ -1270,7 +1270,7 @@
   border-radius: 6px;
   background: rgba(8, 26, 58, 0.24);
   color: rgba(255, 255, 255, 0.76);
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.5;
 }
 
@@ -1291,7 +1291,7 @@
   border-color: rgba(180, 60, 60, 0.34);
   background: rgba(180, 60, 60, 0.09);
   color: #8a2222;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 /* "Will produce" — what `/download/preview` reports for the current setup. The
@@ -1303,12 +1303,12 @@
   gap: 6px;
   margin: 0;
   color: rgba(255, 255, 255, 0.86);
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .app-shell:not(.home-shell) .downloads-preview-summary strong {
   color: #fdf6dc;
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 800;
 }
 
@@ -1323,7 +1323,7 @@
   background: rgba(8, 26, 58, 0.32);
   color: rgba(255, 255, 255, 0.7);
   font-family: Consolas, "Cascadia Mono", Menlo, monospace;
-  font-size: 10.5px;
+  font-size: 12.5px;
   word-break: break-all;
 }
 
@@ -1343,7 +1343,7 @@
   gap: 6px;
   padding: 7px 10px;
   color: rgba(255, 255, 255, 0.78);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   cursor: pointer;
   list-style: none;
@@ -1380,7 +1380,7 @@
   border-radius: 999px;
   background: rgba(146, 166, 202, 0.12);
   color: rgba(255, 255, 255, 0.8);
-  font-size: 10px;
+  font-size: 12px;
   white-space: nowrap;
 }
 
@@ -1397,7 +1397,7 @@
   border-radius: 999px;
   background: rgba(237, 227, 175, 0.2);
   color: #fdf6dc;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.04em;
 }
@@ -1415,7 +1415,7 @@
   border-radius: 6px;
   background: transparent;
   color: #f4f8ff;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
 }
 
@@ -1457,7 +1457,7 @@
   padding: 7px 10px 7px 22px;
   cursor: pointer;
   color: #fdf6dc;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 800;
   letter-spacing: 0.02em;
 }
@@ -1473,7 +1473,7 @@
   top: 50%;
   transform: translateY(-50%);
   color: rgba(237, 227, 175, 0.85);
-  font-size: 9px;
+  font-size: 11px;
   transition: transform 0.15s ease;
 }
 
@@ -1487,7 +1487,7 @@
   border-radius: 999px;
   background: rgba(237, 227, 175, 0.18);
   color: rgba(255, 255, 255, 0.82);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
 }
 
@@ -1509,7 +1509,7 @@
   padding: 3px 6px;
   border-radius: 5px;
   color: rgba(255, 255, 255, 0.8);
-  font-size: 11.5px;
+  font-size: 13.5px;
   cursor: pointer;
 }
 
@@ -1539,7 +1539,7 @@
   padding: 8px 10px;
   border: 1px solid transparent;
   border-radius: 6px;
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.5;
 }
 
@@ -1574,7 +1574,7 @@
   overflow: hidden;
   color: #fdf6dc;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 10.5px;
+  font-size: 12.5px;
   text-decoration: underline;
   text-underline-offset: 2px;
   text-overflow: ellipsis;
@@ -1669,7 +1669,7 @@ body:has(.downloads-atlas-page),
   background: rgba(255, 255, 255, 0.1);
   color: #ffffff;
   font: inherit;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
 }

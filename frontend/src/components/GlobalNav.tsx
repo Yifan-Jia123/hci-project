@@ -13,7 +13,7 @@
  * 所以这里**不放搜索框**：首页搜的是图谱、检索页搜的是结果集，语义不同，
  * 塞进全局栏只会重新制造歧义。
  */
-import { Download, Languages, Network, Search } from 'lucide-react'
+import { ChevronDown, Download, Languages, Menu, Network, Search } from 'lucide-react'
 import type { View } from '../lib/entities'
 import { LANGS, useLang, useT } from '../lib/i18n'
 import { SearchSetControl } from './SearchSetControl'
@@ -77,14 +77,17 @@ export function GlobalNav({
             </button>
           )
         })}
+        <details className="global-nav-menu">
+          <summary className="global-nav-tab"><Menu size={16} aria-hidden="true" /><span>{t('Tools')}</span><ChevronDown className="global-nav-chevron" size={15} aria-hidden="true" /></summary>
+          <div className="global-nav-menu-popover">
+            <button type="button" onClick={(event) => { event.currentTarget.closest('.global-nav-menu')?.removeAttribute('open'); onOpenBlast() }}>{t('BLAST')}</button>
+            <button type="button" onClick={(event) => { event.currentTarget.closest('.global-nav-menu')?.removeAttribute('open'); onOpenStructure() }}>{t('Structure search')}</button>
+            <div className="global-nav-menu-set"><SearchSetControl value={searchSet} onChange={onSearchSetChange} /></div>
+          </div>
+        </details>
       </nav>
 
       <div className="global-nav-tools">
-        <SearchSetControl value={searchSet} onChange={onSearchSetChange} />
-        <button type="button" className="global-nav-tool" onClick={onOpenBlast}>BLAST</button>
-        <button type="button" className="global-nav-tool" onClick={onOpenStructure}>{t('Structure search')}</button>
-        <span className="global-nav-divider" aria-hidden="true" />
-
         {/*
           「下载表格」单独做成实心按钮，不进左侧主导航。
           它是全站唯一的导出入口，用户在任一页面都要够得着 —— 和另外两个
@@ -98,7 +101,7 @@ export function GlobalNav({
           title={t('Open download list')}
         >
           <Download size={16} aria-hidden="true" />
-          <span>{t('Downloading table')}</span>
+          <span>{t('Downloads')}</span>
           {queueCount > 0 && <span className="global-nav-downloads-badge">{queueCount}</span>}
         </button>
 

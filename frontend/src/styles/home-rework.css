@@ -79,7 +79,7 @@
 }
 
 .structure-drawer-kicker {
-  font-size: 11px;
+  font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--ink-muted);
@@ -87,7 +87,7 @@
 
 .structure-drawer-title h2 {
   margin: 2px 0 0;
-  font-size: 16px;
+  font-size: 18px;
   color: var(--ink);
   white-space: nowrap;
   overflow: hidden;
@@ -121,7 +121,7 @@
 }
 
 .structure-drawer-status {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--ink-muted);
   padding: 8px 10px;
   border-radius: 8px;
@@ -160,7 +160,7 @@
   gap: 7px;
   padding: 8px 12px;
   border-radius: 9px;
-  font-size: 13px;
+  font-size: 15px;
   border: 1px solid var(--line);
   background: var(--panel);
   color: var(--ink);
@@ -200,7 +200,7 @@
   grid-template-columns: 86px 1fr;
   gap: 10px;
   align-items: baseline;
-  font-size: 12.5px;
+  font-size: 14.5px;
 }
 
 .structure-result-field span {
@@ -214,7 +214,7 @@
 }
 
 .structure-drawer-alert {
-  font-size: 12.5px;
+  font-size: 14.5px;
   color: var(--coral);
   padding: 8px 10px;
   border-radius: 8px;
@@ -238,12 +238,12 @@
 
 .structure-drawer-section-head h3 {
   margin: 0;
-  font-size: 13.5px;
+  font-size: 15.5px;
   color: var(--ink);
 }
 
 .structure-drawer-section-head span {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--ink-muted);
   background: rgba(173, 205, 234, 0.1);
   border-radius: 20px;
@@ -294,18 +294,18 @@
 }
 
 .structure-drawer-hit-main strong {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--ink);
   line-height: 1.3;
 }
 
 .structure-drawer-hit-main span {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--cyan);
 }
 
 .structure-drawer-hit-main small {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--ink-muted);
   white-space: nowrap;
   overflow: hidden;
@@ -356,7 +356,7 @@
 }
 
 .structure-drawer-empty {
-  font-size: 12.5px;
+  font-size: 14.5px;
   color: var(--ink-muted);
   padding: 18px;
   text-align: center;
@@ -527,7 +527,7 @@
   background: transparent;
   /* 基础规则是 12px / 盒子高 34px。首页这条标题抬到 15px,盒子压到 26px ——
      盒子一矮,「Filters」到下一行的间距跟着缩,不必再动下面的 margin。 */
-  font-size: 15px;
+  font-size: 17px;
   min-height: 26px;
 }
 
@@ -539,7 +539,7 @@
   border-radius: 20px;
   background: rgba(237, 227, 175, 0.1);
   color: var(--graph-gold, #f0e5b2);
-  font-size: 11px;
+  font-size: 13px;
   cursor: pointer;
 }
 
@@ -611,7 +611,7 @@
 
 .home-filter-label {
   margin: 0;
-  font-size: 11px;
+  font-size: 13px;
   color: rgba(248, 251, 255, 0.62);
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -622,7 +622,7 @@
    必须写在屏幕上，不能只挂在 title 里。 */
 .home-filter-hint {
   margin: 0;
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.45;
   color: rgba(248, 251, 255, 0.48);
 }
@@ -680,14 +680,14 @@
 
 .home-filter-help-title {
   margin: 0 0 4px;
-  font-size: 11.5px;
+  font-size: 13.5px;
   font-weight: 600;
   color: #fff;
 }
 
 .home-filter-help-body {
   margin: 0;
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.5;
   color: rgba(248, 251, 255, 0.68);
 }
@@ -744,7 +744,7 @@
   border-radius: 8px;
   background: rgba(8, 26, 58, 0.35);
   color: rgba(248, 251, 255, 0.92);
-  font-size: 12.5px;
+  font-size: 14.5px;
   text-align: left;
   cursor: pointer;
 }
@@ -802,7 +802,7 @@
   outline: 0;
   background: transparent;
   color: #fff;
-  font-size: 12.5px;
+  font-size: 14.5px;
 }
 
 .home-filter-search input::placeholder {
@@ -826,7 +826,7 @@
   border-radius: 6px;
   background: transparent;
   color: rgba(248, 251, 255, 0.9);
-  font-size: 12px;
+  font-size: 14px;
   text-align: left;
   cursor: pointer;
 }
@@ -865,7 +865,7 @@
 .home-filter-empty {
   padding: 14px;
   text-align: center;
-  font-size: 12px;
+  font-size: 14px;
   color: rgba(248, 251, 255, 0.5);
 }
 
@@ -886,7 +886,7 @@
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.06);
   color: rgba(248, 251, 255, 0.85);
-  font-size: 11px;
+  font-size: 13px;
   overflow-wrap: anywhere;
   text-align: left;
   cursor: pointer;
@@ -924,7 +924,7 @@
   padding: 0 12px;
   background: rgba(255, 255, 255, 0.36);
   color: rgba(8, 26, 58, 0.86);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -950,7 +950,7 @@
   border-radius: 4px;
   background: transparent;
   color: rgba(8, 26, 58, 0.75);
-  font-size: 11.5px;
+  font-size: 13.5px;
   cursor: pointer;
 }
 
@@ -982,7 +982,7 @@
   background: linear-gradient(180deg, rgba(20, 40, 63, 0.96), rgba(12, 27, 44, 0.96));
   box-shadow: 0 18px 40px rgba(8, 26, 58, 0.4);
   color: var(--ink, #ecf6ff);
-  font-size: 12.5px;
+  font-size: 14.5px;
   transform: translateX(-50%);
   white-space: nowrap;
 }
@@ -1007,7 +1007,7 @@
   border-radius: 999px;
   background: rgba(237, 227, 175, 0.16);
   color: var(--graph-gold, #f0e5b2);
-  font-size: 12px;
+  font-size: 14px;
   cursor: pointer;
   white-space: nowrap;
 }
@@ -1046,12 +1046,12 @@
 .home-map-page .home-noresult-panel h3 {
   margin: 0 0 8px;
   color: var(--coral, #ff8f8f);
-  font-size: 17px;
+  font-size: 19px;
 }
 
 .home-map-page .home-noresult-panel p {
   margin: 0 0 18px;
-  font-size: 13px;
+  font-size: 15px;
   color: rgba(248, 251, 255, 0.75);
   word-break: break-word;
 }
@@ -1152,7 +1152,7 @@
   border-radius: 999px;
   background: rgba(114, 224, 196, 0.14);
   color: #9beacf;
-  font: 600 10px/1.6 Inter, ui-sans-serif, system-ui, sans-serif;
+  font: 600 12px/1.6 Inter, ui-sans-serif, system-ui, sans-serif;
   letter-spacing: 0;
   white-space: nowrap;
 }
@@ -1186,7 +1186,7 @@
   border-radius: 999px;
   background: rgba(237, 227, 175, 0.14);
   color: #f0e2ac;
-  font: 600 10px/1.6 Inter, ui-sans-serif, system-ui, sans-serif;
+  font: 600 12px/1.6 Inter, ui-sans-serif, system-ui, sans-serif;
   letter-spacing: 0;
   white-space: nowrap;
 }
@@ -1301,7 +1301,7 @@
   border-radius: 5px;
   background: transparent;
   color: rgba(8, 26, 58, 0.78);
-  font: 600 11.5px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  font: 600 13.5px/1 Inter, ui-sans-serif, system-ui, sans-serif;
   white-space: nowrap;
   cursor: pointer;
 }
@@ -1353,7 +1353,7 @@
 
 .pw-composer-title {
   color: var(--graph-gold, #f0e5b2);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1375,7 +1375,7 @@
 .pw-slot-badge {
   flex: 0 0 auto;
   color: rgba(236, 246, 255, 0.72);
-  font-size: 10.5px;
+  font-size: 12.5px;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -1397,7 +1397,7 @@
   outline: 0;
   background: transparent;
   color: #ffffff;
-  font: 500 12.5px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  font: 500 14.5px/1 Inter, ui-sans-serif, system-ui, sans-serif;
 }
 
 .pw-slot-chip.is-via .pw-slot-input {
@@ -1463,13 +1463,13 @@
 
 .pw-slot-suggestions strong {
   overflow-wrap: anywhere;
-  font-size: 12.5px;
+  font-size: 14.5px;
   font-weight: 600;
 }
 
 .pw-slot-suggestions small {
   color: rgba(236, 246, 255, 0.55);
-  font-size: 10.5px;
+  font-size: 12.5px;
 }
 
 .pw-suggest-placeholder {
@@ -1478,7 +1478,7 @@
   gap: 8px;
   padding: 8px 10px;
   color: rgba(236, 246, 255, 0.55);
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .pw-composer-actions {
@@ -1497,7 +1497,7 @@
   border-radius: 9px;
   background: transparent;
   color: rgba(236, 246, 255, 0.82);
-  font: 600 11.5px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  font: 600 13.5px/1 Inter, ui-sans-serif, system-ui, sans-serif;
   white-space: nowrap;
   cursor: pointer;
 }
@@ -1539,7 +1539,7 @@
 
 .pw-composer-hint {
   color: rgba(236, 246, 255, 0.5);
-  font-size: 11px;
+  font-size: 13px;
   white-space: nowrap;
 }
 
@@ -1553,7 +1553,7 @@
   border-radius: 9px;
   background: var(--graph-gold, #f0e5b2);
   color: var(--graph-navy, #081a3a);
-  font: 700 12.5px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  font: 700 14.5px/1 Inter, ui-sans-serif, system-ui, sans-serif;
   white-space: nowrap;
   cursor: pointer;
 }
@@ -1576,7 +1576,7 @@
   padding: 6px 10px;
   border-radius: 8px;
   color: rgba(255, 255, 255, 0.92);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.45;
   overflow-wrap: anywhere;
 }
@@ -1694,7 +1694,7 @@
      字号提到 12px —— 同一套色板，只是不再透。对比度 13.3:1。 */
   background: var(--graph-navy, #081a3a);
   color: var(--graph-gold, #f0e5b2);
-  font: 700 12px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  font: 700 14px/1 Inter, ui-sans-serif, system-ui, sans-serif;
 }
 
 .pathway-row-main {
@@ -1706,14 +1706,14 @@
 
 .pathway-row-summary {
   overflow-wrap: anywhere;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.45;
   color: #0e1726;
 }
 
 .pathway-row-meta {
   color: rgba(14, 23, 38, 0.58);
-  font-size: 10.5px;
+  font-size: 12.5px;
   letter-spacing: 0.02em;
 }
 
@@ -1759,7 +1759,7 @@
   background: linear-gradient(180deg, rgba(16, 35, 62, 0.96), rgba(9, 24, 47, 0.96));
   box-shadow: 0 10px 26px rgba(8, 26, 58, 0.32);
   color: var(--graph-gold, #f0e5b2);
-  font: 600 12px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  font: 600 14px/1 Inter, ui-sans-serif, system-ui, sans-serif;
   cursor: pointer;
   transform: translateX(-50%);
 }
@@ -1805,7 +1805,7 @@
   background: linear-gradient(180deg, rgba(16, 35, 62, 0.96), rgba(9, 24, 47, 0.96));
   box-shadow: 0 12px 30px rgba(8, 26, 58, 0.34);
   color: var(--graph-gold, #f0e5b2);
-  font: 700 12px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  font: 700 14px/1 Inter, ui-sans-serif, system-ui, sans-serif;
   letter-spacing: 0.05em;
   cursor: pointer;
   white-space: nowrap;
@@ -1856,14 +1856,14 @@
   align-items: center;
   gap: 5px;
   color: var(--graph-gold, #f0e5b2);
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   white-space: nowrap;
 }
 
 .home-map-page .pw-trace-strong strong {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -1873,13 +1873,13 @@
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.08);
   color: #ffffff;
-  font: 600 11.5px/1.2 Inter, ui-sans-serif, system-ui, sans-serif;
+  font: 600 13.5px/1.2 Inter, ui-sans-serif, system-ui, sans-serif;
   white-space: nowrap;
 }
 
 .home-map-page .pw-trace-guide {
   color: rgba(236, 246, 255, 0.78);
-  font-size: 11.5px;
+  font-size: 13.5px;
   line-height: 1.35;
 }
 
@@ -1889,7 +1889,7 @@
 
 .home-map-page .pw-trace-hint.is-error {
   color: #ffb9b9;
-  font-size: 11.5px;
+  font-size: 13.5px;
   font-weight: 600;
   line-height: 1.35;
 }
@@ -1905,7 +1905,7 @@
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.06);
   color: var(--graph-gold, #f0e5b2);
-  font: 600 11px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  font: 600 13px/1 Inter, ui-sans-serif, system-ui, sans-serif;
   white-space: nowrap;
   cursor: pointer;
 }
@@ -1985,7 +1985,7 @@
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.72);
   color: rgba(8, 26, 58, 0.78);
-  font: 600 11px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  font: 600 13px/1 Inter, ui-sans-serif, system-ui, sans-serif;
   cursor: pointer;
   white-space: nowrap;
 }
@@ -2029,7 +2029,7 @@
   border-radius: 999px;
   background: rgba(237, 227, 175, 0.18);
   color: var(--graph-gold, #f0e5b2);
-  font: 600 11px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  font: 600 13px/1 Inter, ui-sans-serif, system-ui, sans-serif;
   cursor: pointer;
   white-space: nowrap;
 }
@@ -2052,7 +2052,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #ffffff;
-  font: 700 12px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  font: 700 14px/1 Inter, ui-sans-serif, system-ui, sans-serif;
 }
 
 .home-map-page .pw-detail-summary-arrow {
@@ -2062,7 +2062,7 @@
 .home-map-page .pw-detail-summary span:last-child {
   flex: 0 0 auto;
   color: rgba(236, 246, 255, 0.72);
-  font-size: 11px;
+  font-size: 13px;
   white-space: nowrap;
 }
 
@@ -2077,7 +2077,7 @@
   border-radius: 999px;
   background: var(--graph-gold, #f0e5b2);
   color: var(--graph-navy, #081a3a);
-  font: 800 11px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  font: 800 13px/1 Inter, ui-sans-serif, system-ui, sans-serif;
   cursor: pointer;
   white-space: nowrap;
 }
@@ -2140,12 +2140,12 @@
 
 .pw-drawer-header strong {
   color: #ffffff;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .pw-drawer-header span {
   color: rgba(236, 246, 255, 0.72);
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .pw-drawer-close {
@@ -2206,11 +2206,11 @@
   border-radius: 50%;
   background: rgba(236, 246, 255, 0.16);
   color: rgba(236, 246, 255, 0.92);
-  font: 800 10px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  font: 800 12px/1 Inter, ui-sans-serif, system-ui, sans-serif;
 }
 
 .pw-drawer-chip-name {
-  font: 600 11px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  font: 600 13px/1 Inter, ui-sans-serif, system-ui, sans-serif;
   white-space: nowrap;
 }
 
@@ -2257,12 +2257,12 @@
   border-radius: 50%;
   background: var(--graph-navy, #081a3a);
   color: var(--graph-gold, #f0e5b2);
-  font: 800 10px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  font: 800 12px/1 Inter, ui-sans-serif, system-ui, sans-serif;
 }
 
 .pw-drawer-step-names {
   flex: 1 1 auto;
-  font: 600 12px/1.3 Inter, ui-sans-serif, system-ui, sans-serif;
+  font: 600 14px/1.3 Inter, ui-sans-serif, system-ui, sans-serif;
   color: #0e1726;
   min-width: 0;
   /* 「A → B」两端的化合物名。含空格的常规名字本身就会折行，这两行是兜底：
@@ -2278,7 +2278,7 @@
 
 .pw-drawer-step-count {
   flex: 0 0 auto;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   color: rgba(8, 26, 58, 0.6);
 }
@@ -2289,13 +2289,13 @@
   gap: 6px;
   margin: 2px 0 0;
   color: rgba(8, 26, 58, 0.55);
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .pw-drawer-step-empty {
   margin: 2px 0 0;
   color: rgba(8, 26, 58, 0.5);
-  font-size: 12px;
+  font-size: 14px;
   font-style: italic;
 }
 
@@ -2390,7 +2390,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 12.5px;
+  font-size: 14.5px;
   font-weight: 800;
   color: #0a1b38;
   letter-spacing: 0.02em;
@@ -2398,7 +2398,7 @@
 
 .pw-drawer-candidate-name {
   font-style: normal;
-  font-size: 11px;
+  font-size: 13px;
   color: rgba(8, 26, 58, 0.66);
   min-width: 0;
   overflow: hidden;
@@ -2421,13 +2421,13 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   font-style: normal;
-  font-size: 11px;
+  font-size: 13px;
   color: rgba(8, 26, 58, 0.58);
 }
 
 .pw-drawer-candidate-src {
   flex: 0 0 auto;
-  font-size: 9px;
+  font-size: 11px;
   padding: 1px 6px;
   border-radius: 999px;
   background: rgba(8, 26, 58, 0.08);
@@ -2449,7 +2449,7 @@
 
 .pw-drawer-count {
   color: rgba(236, 246, 255, 0.85);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
 }
 
@@ -2463,7 +2463,7 @@
   border-radius: 999px;
   background: var(--graph-gold, #f0e5b2);
   color: var(--graph-navy, #081a3a);
-  font: 800 12px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  font: 800 14px/1 Inter, ui-sans-serif, system-ui, sans-serif;
   cursor: pointer;
 }
 
@@ -2512,7 +2512,7 @@
   outline: none;
   background: transparent;
   color: var(--graph-navy, #081a3a);
-  font: 500 12px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  font: 500 14px/1 Inter, ui-sans-serif, system-ui, sans-serif;
 }
 
 .pw-drawer-candidates-search button {
@@ -2544,7 +2544,7 @@
 .merged-drawer-count {
   margin: 8px 0 0;
   color: rgba(8, 26, 58, 0.62);
-  font-size: 11.5px;
+  font-size: 13.5px;
   font-weight: 600;
 }
 
@@ -2561,7 +2561,7 @@
   border-radius: 999px;
   background: transparent;
   color: var(--graph-navy, #081a3a);
-  font: 700 12px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  font: 700 14px/1 Inter, ui-sans-serif, system-ui, sans-serif;
   cursor: pointer;
 }
 

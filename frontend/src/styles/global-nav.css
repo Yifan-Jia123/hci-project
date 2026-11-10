@@ -71,7 +71,7 @@
 }
 
 .global-nav-wordmark {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 800;
   letter-spacing: 0.01em;
   white-space: nowrap;
@@ -86,6 +86,47 @@
   flex: none;
 }
 
+.global-nav-menu {
+  position: relative;
+}
+
+.global-nav-menu > summary {
+  list-style: none;
+}
+
+.global-nav-menu > summary::-webkit-details-marker { display: none; }
+
+.global-nav-menu-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 210px;
+  padding: 8px;
+  display: grid;
+  gap: 4px;
+  border: 1px solid rgba(237, 227, 175, 0.28);
+  border-radius: 10px;
+  background: #102b55;
+  box-shadow: 0 10px 24px rgba(4, 12, 28, 0.22);
+}
+
+.global-nav-menu-popover button {
+  min-height: 36px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #f4f8ff;
+  text-align: left;
+  font: inherit;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.global-nav-menu-popover button:hover { background: rgba(237, 227, 175, 0.14); }
+
+.global-nav-menu-set { padding: 4px; border-top: 1px solid rgba(255,255,255,0.12); }
+
 .global-nav-tab {
   display: inline-flex;
   align-items: center;
@@ -97,7 +138,7 @@
   background: transparent;
   color: rgba(244, 248, 255, 0.74);
   font: inherit;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
@@ -127,7 +168,7 @@
   border-radius: 999px;
   background: #ede3af;
   color: #14203a;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 800;
 }
 
@@ -149,7 +190,7 @@
   background: transparent;
   color: rgba(244, 248, 255, 0.76);
   font: inherit;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
@@ -186,17 +227,17 @@
   background: #ede3af;
   color: #14203a;
   font: inherit;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 800;
   white-space: nowrap;
   cursor: pointer;
-  box-shadow: 0 2px 10px rgba(237, 227, 175, 0.28);
+  box-shadow: none;
   transition: background 0.15s ease, box-shadow 0.15s ease;
 }
 
 .global-nav-downloads:hover {
   background: #f6efc9;
-  box-shadow: 0 4px 14px rgba(237, 227, 175, 0.42);
+  box-shadow: none;
 }
 
 .global-nav-downloads.is-active {
@@ -213,7 +254,7 @@
   border-radius: 999px;
   background: #14203a;
   color: #ede3af;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 800;
 }
 
@@ -234,7 +275,7 @@
   border-radius: 999px;
   color: inherit;
   font: inherit;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   cursor: pointer;
 }
@@ -280,7 +321,7 @@
   background: rgba(237, 227, 175, 0.12);
   color: #fdf6dc;
   font: inherit;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   cursor: pointer;
 }
@@ -365,13 +406,17 @@
 }
 
 @media (max-width: 760px) {
+  .global-nav-menu-popover { right: 0; left: auto; }
+}
+
+@media (max-width: 760px) {
   :root {
     --global-nav-h: 52px;
   }
 
   .global-nav-tool {
     padding: 0 7px;
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .global-nav-divider {

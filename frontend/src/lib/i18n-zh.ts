@@ -16,6 +16,8 @@ export const ZH: Record<string, string> = {
   // ---- 应用外壳 / 导航 ----
   'Overview': '总览',
   'Search library': '检索库',
+  'Tools': '工具',
+  'Downloads': '下载',
   'Download queue': '下载队列',
   'Workspace': '工作区',
   'Dataset': '数据集',
